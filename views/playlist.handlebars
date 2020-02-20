@@ -1,0 +1,29 @@
+{{#> navbar}}
+<nav class="level">
+    <a class="button is-rounded" href="/explore">Back</a>
+</nav>
+
+<div class="columns">
+    <div class="column is-one-quarter">
+        <div>
+            {{> playlistCard playlist}}
+        </div>
+    </div>
+    <div class="column is-offset-1">
+        <table class="table is-hoverable is-fullwidth">
+            <thead>
+                <tr>
+                    <th>Song name</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each songs}}
+                <tr>
+                    <td>{{name}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+{{/navbar}}

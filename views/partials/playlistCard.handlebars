@@ -1,0 +1,28 @@
+<div class="card">
+    <a href="/playlist/{{playlist_id}}">
+        <div class="card-image">
+            <figure class="image is-4by3">
+                <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
+            </figure>
+        </div>
+        <div class="card-content">
+            <div class="media">
+                <div class="media-content">
+                    {{#if name}}
+                    <p class="title is-5">{{name}}</p>
+                    {{else}}
+                    <p class="title is-5">Unknown Playlist</p>
+                    {{/if}}
+
+                    {{#if author}}
+                    <a href="/my-music/{{author_id}}">
+                        <p class="subtitle is-5">{{author}}</p>
+                    </a>
+                    {{else}}
+                    <p class="subtitle is-5">Unknown Author</p>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </a>
+</div>

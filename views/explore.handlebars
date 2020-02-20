@@ -1,0 +1,24 @@
+{{#> navbar}}
+<h1 class="title">
+    Explore
+</h1>
+<div class="columns is-multiline">
+    {{#each allplaylists}}
+    <div class="column is-one-quarter">
+        {{> playlistCard this }}
+    </div>
+    {{/each}}
+</div>
+<br />
+
+<h1 class="title">
+    Your playlists
+</h1>
+<div class="columns is-multiline">
+    {{#each myplaylists}}
+    <div class="column is-one-quarter">
+        {{> playlistCard this }}
+    </div>
+    {{/each}}
+</div>
+{{/navbar}}

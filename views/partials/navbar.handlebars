@@ -1,0 +1,59 @@
+<div class="bd-navbar navbar has-shadow is-spaced">
+    <div class="navbar-brand">
+        <a class="navbar-item" href="/explore">
+            <img src="/images/pm-logo.png">
+        </a>
+    </div>
+
+    <div class="navbar-menu">
+        <div class="navbar-start">
+            <a href="/explore/1" class="navbar-item">
+            {{!-- CHANGER L'ID EN RIEN POUR LE SET DANS LE JS AVEC LA SESSION --}}
+                <i class="material-icons as-text">explore</i>
+                Explore
+            </a>
+            <a href="/my-music/1" class="navbar-item">
+            {{!-- CHANGER L'ID EN RIEN POUR LE SET DANS LE JS AVEC LA SESSION --}}
+                <i class="material-icons as-text">album</i>
+                My Music
+            </a>
+            <a href="/users" class="navbar-item">
+                <i class="material-icons as-text">supervisor_account</i>
+                Users
+            </a>
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">
+                    More
+                </a>
+                <div class="navbar-dropdown">
+                    <a href="/about" class="navbar-item">
+                        <i class="material-icons as-text">copyright</i>
+                        About
+                    </a>
+                    <a href="/contact" class="navbar-item">
+                        <i class="material-icons as-text">contact_mail</i>
+                        Contact
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <div class="buttons">
+                    <a href="/signup" class="button is-primary">
+                        <strong>Sign up</strong>
+                    </a>
+                    <a href="/login" class="button is-light">
+                        Log in
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<section class="section">
+    <div class="container">
+        {{> @partial-block }}
+    </div>
+</section>
