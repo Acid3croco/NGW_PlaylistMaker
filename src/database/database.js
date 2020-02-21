@@ -24,7 +24,6 @@ function initDatabase() {
             console.log("songs table created")
         }
     })
-    insertDatabase()
 }
 
 function insertDatabase() {
@@ -90,14 +89,26 @@ function getUsers() {
     })
 }
 
-function getUserById(user_id) {
-    const query = 'SELECT * FROM users WHERE user_id = ?'
+function authUser(username, password) {
+    const query = 'SELECT * FROM users WHERE username = ? AND password = ?'
     return new Promise((resolve, reject) => {
-        db.get(query, user_id, (err, users) => {
+        db.get(query, [username, password], (err, user) => {
             if (err) {
                 return reject(err)
             }
-            resolve(users)
+            resolve(user)
+        })
+    })
+}
+
+function getUserById(user_id) {
+    const query = 'SELECT * FROM users WHERE user_id = ?'
+    return new Promise((resolve, reject) => {
+        db.get(query, user_id, (err, user) => {
+            if (err) {
+                return reject(err)
+            }
+            resolve(user)
         })
     })
 }
@@ -130,10 +141,13 @@ function getPlaylists() {
         db.all(query, (err, playlists) => {
             if (err) {
                 return reject(err)
-            } else {
+            }
+            if (playlists.length > 0)
                 setPlaylistsAuthor(playlists).then((playlists) => {
                     resolve(playlists)
                 })
+            else {
+                resolve(playlists)
             }
         })
     })
@@ -159,10 +173,13 @@ function getPlaylistsByUserId(user_id) {
         db.all(query, user_id, (err, playlists) => {
             if (err) {
                 return reject(err)
-            } else {
+            }
+            if (playlists.length > 0)
                 setPlaylistsAuthor(playlists).then((playlists) => {
                     resolve(playlists)
                 })
+            else {
+                resolve(playlists)
             }
         })
     })
@@ -204,4 +221,4 @@ function createUser(username, password) {
     })
 }
 
-module.exports = { initDatabase, getUsers, getPlaylists, getPlaylistById, getPlaylistsByUserId, getSongs, getSongsByPlaylistId, getUserById, createUser }
+module.exports = { initDatabase, insertDatabase, getUsers, getPlaylists, getPlaylistById, getPlaylistsByUserId, getSongs, getSongsByPlaylistId, getUserById, createUser, authUser }

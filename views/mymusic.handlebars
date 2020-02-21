@@ -1,18 +1,22 @@
 {{#> navbar}}
-{{#if user}}
 <h1 class="title">
     {{user.username}}'s Playlists
 </h1>
-{{else}}
-<h1 class="title">
-    My music
-</h1>
-{{/if}}
+
 <div class="columns is-multiline">
     {{#each playlists}}
     <div class="column is-one-quarter">
         {{> playlistCard this user=../user}}
     </div>
     {{/each}}
+    <div class="column is-one-quarter">
+        <div class="card">
+        <div class="card-image">
+            <figure class="image is-square">
+                <img src="/images/logo.png" height="50" width="50" alt="Placeholder image">
+            </figure>
+        </div>
+        </div>
+    </div>
 </div>
 {{/navbar}}

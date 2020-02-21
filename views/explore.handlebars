@@ -2,6 +2,7 @@
 <h1 class="title">
     Explore
 </h1>
+{{#if allplaylists}}
 <div class="columns is-multiline">
     {{#each allplaylists}}
     <div class="column is-one-quarter">
@@ -9,16 +10,25 @@
     </div>
     {{/each}}
 </div>
+{{else}}
+<div>There is no playlist...</div>
+{{/if}}
 <br />
 
-<h1 class="title">
-    Your playlists
-</h1>
-<div class="columns is-multiline">
-    {{#each myplaylists}}
-    <div class="column is-one-quarter">
-        {{> playlistCard this }}
+{{#if session.user_id}}
+    <h1 class="title">
+        Your playlists
+    </h1>
+    {{#if myplaylists}}
+    <div class="columns is-multiline">
+        {{#each myplaylists}}
+        <div class="column is-one-quarter">
+            {{> playlistCard this }}
+        </div>
+        {{/each}}
     </div>
-    {{/each}}
-</div>
+    {{else}}
+    <p>You have no playlists, lets add some</p>
+    {{/if}}
+{{/if}}
 {{/navbar}}

@@ -2,16 +2,16 @@
     <div class="hero-body">
         <div class="container has-text-centered">
             <div class="column is-4 is-offset-4">
-                <div class="box">
+                <form class="box" action="/login" method="POST">
                     <h1 class="title">Login</h1>
                     <div class="field">
                         <p class="control">
-                            <input class="input" placeholder="Your Username">
+                            <input class="input" placeholder="Your Username" name="username">
                         </p>
                     </div>
                     <div class="field">
                         <p class="control">
-                            <input class="input" type="password" placeholder="Your Password">
+                            <input class="input" type="password" placeholder="Your Password" name="password">
                         </p>
                     </div>
                     <div class="field">
@@ -21,7 +21,12 @@
                             </button>
                         </p>
                     </div>
-                </div>
+                    <div class="field">
+                        <p class="control">
+                            Don't have an account? <a href="/signup">Sign Up</a>
+                        </p>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

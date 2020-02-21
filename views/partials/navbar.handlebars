@@ -7,16 +7,16 @@
 
     <div class="navbar-menu">
         <div class="navbar-start">
-            <a href="/explore/1" class="navbar-item">
-            {{!-- CHANGER L'ID EN RIEN POUR LE SET DANS LE JS AVEC LA SESSION --}}
+            <a href="/explore/{{session.user_id}}" class="navbar-item">
                 <i class="material-icons as-text">explore</i>
                 Explore
             </a>
-            <a href="/my-music/1" class="navbar-item">
-            {{!-- CHANGER L'ID EN RIEN POUR LE SET DANS LE JS AVEC LA SESSION --}}
+            {{#if session.user_id}}
+            <a href="/my-music/{{session.user_id}}" class="navbar-item">
                 <i class="material-icons as-text">album</i>
                 My Music
             </a>
+            {{/if}}
             <a href="/users" class="navbar-item">
                 <i class="material-icons as-text">supervisor_account</i>
                 Users
@@ -40,6 +40,13 @@
 
         <div class="navbar-end">
             <div class="navbar-item">
+                {{#if session.user_id}}
+                <div class="buttons">
+                    <a href="/logout" class="button is-light">
+                        Log out
+                    </a>
+                </div>
+                {{else}}
                 <div class="buttons">
                     <a href="/signup" class="button is-primary">
                         <strong>Sign up</strong>
@@ -48,6 +55,7 @@
                         Log in
                     </a>
                 </div>
+                {{/if}}
             </div>
         </div>
     </div>
