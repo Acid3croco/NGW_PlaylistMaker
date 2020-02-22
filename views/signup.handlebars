@@ -1,29 +1,43 @@
 <section class="hero is-light is-fullheight">
     <div class="hero-body">
-        <div class="container has-text-centered">
+        <div class="container">
             <div class="column is-4 is-offset-4">
                 <form class="box" action="/signup/create" method="POST">
-                    <h1 class="title">Sign Up</h1>
+                    <h1 class="title has-text-centered">Sign Up</h1>
                     <div class="field">
                         <p class="control">
-                            <input class="input" placeholder="Username" name="username">
+                            <input {{#if errorPassword}} class="input is-danger" {{else if errorUsername}} class="input is-danger" {{else}} class="input" {{/if}}
+                                placeholder="Username" name="username">
+                        </p>
+                        {{#if errorUsername}}
+                        <p class="help is-danger">Username already exists</p>
+                        {{/if}}
+                    </div>
+                    <div class="field">
+                        <p class="control">
+                            <input {{#if errorPassword}} class="input is-danger" {{else}} class="input" {{/if}}
+                                type="password" placeholder="Password" name="password">
                         </p>
                     </div>
                     <div class="field">
                         <p class="control">
-                            <input class="input" type="password" placeholder="Password" name="password">
+                            <input {{#if errorPassword}} class="input is-danger" {{else}} class="input" {{/if}}
+                                type="password" placeholder="Retype Password" name="password2">
                         </p>
-                    </div>
-                    <div class="field">
-                        <p class="control">
-                            <input class="input" type="password" placeholder="Retype Password">
-                        </p>
+                        {{#if errorPassword}}
+                        <p class="help is-danger">Username is empty / Password are different</p>
+                        {{/if}}
                     </div>
                     <div class="field">
                         <p class="control">
                             <button class="button is-block is-primary is-fullwidth" type="submit">
                                 Sign Up
                             </button>
+                        </p>
+                    </div>
+                    <div class="field">
+                        <p class="control">
+                            Already have an account? <a href="/login">Login!</a>
                         </p>
                     </div>
                 </form>

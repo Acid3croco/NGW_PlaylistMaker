@@ -1,18 +1,23 @@
 <section class="hero is-light is-fullheight">
     <div class="hero-body">
-        <div class="container has-text-centered">
+        <div class="container">
             <div class="column is-4 is-offset-4">
-                <div class="box">
-                    <h1 class="title">Login</h1>
+                <form class="box" action="/login" method="POST">
+                    <h1 class="title has-text-centered">Login</h1>
                     <div class="field">
                         <p class="control">
-                            <input class="input" placeholder="Your Username">
+                            <input {{#if error}} class="input is-danger" {{else}} class="input" {{/if}}
+                                placeholder="Your Username" name="username">
                         </p>
                     </div>
                     <div class="field">
-                        <p class="control">
-                            <input class="input" type="password" placeholder="Your Password">
-                        </p>
+                        <div class="control">
+                            <input {{#if error}} class="input is-danger" {{else}} class="input" {{/if}} type="password"
+                                placeholder="Your Password" name="password">
+                        </div>
+                        {{#if error}}
+                        <p class="help is-danger">Wrong username or password</p>
+                        {{/if}}
                     </div>
                     <div class="field">
                         <p class="control">
@@ -21,7 +26,12 @@
                             </button>
                         </p>
                     </div>
-                </div>
+                    <div class="field">
+                        <p class="control">
+                            Don't have an account? <a href="/signup">Sign Up!</a>
+                        </p>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

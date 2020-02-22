@@ -2,6 +2,8 @@
 <h1 class="title">
     Users
 </h1>
+
+{{#if users}}
 <table class="table is-hoverable is-fullwidth">
     <tbody>
         {{#each users}}
@@ -15,4 +17,7 @@
         {{/each}}
     </tbody>
 </table>
+{{else}}
+<p>There is no users registered yet</p>
+{{/if}}
 {{/navbar}}
