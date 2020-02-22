@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(session({
     secret: 'uneso6peutencacheruneautre',
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: true
 }))
 
 database.initDatabase()
@@ -82,11 +82,11 @@ app.post('/signup/create', async (request, response) => {
                 response.redirect('/login')
             }, (reason) => {
                 console.log(reason)
-                response.redirect('/signup')
+                return response.render('signup', { title: 'Signup', errorUsername: true })
             })
         })
     } else {
-        response.render('signup', { response: 0 })
+        return response.render('signup', { title: 'Signup', errorPassword: true })
     }
 })
 
@@ -99,21 +99,25 @@ app.post('/login', async (request, response) => {
     if (errors == 0) {
         var res = database.authUser(username)
         res.then((user) => {
-            bcrypt.compare(password, user.password, (err, result) => {
-                if (result == true) {
-                    request.session.user_id = user.user_id
-                    response.redirect('/explore/' + request.session.user_id)
-                } else {
-                    console.log(err)
-                    response.redirect('/login')
-                }
-            })
+            if (user) {
+                bcrypt.compare(password, user.password, (err, result) => {
+                    if (result == true) {
+                        request.session.user_id = user.user_id
+                        response.redirect('/explore/' + request.session.user_id)
+                    } else {
+                        console.log(err)
+                        return response.render('login', { title: 'Login', error: true })
+                    }
+                })
+            } else {
+                return response.render('login', { title: 'Login', error: true })
+            }
         }, (reason) => {
             console.log(reason)
-            response.redirect('/login')
+            return response.render('login', { title: 'Login', error: true })
         })
     } else {
-        response.render('login', { title: 'Login' })
+        return response.render('login', { title: 'Login', error: true })
     }
 })
 
