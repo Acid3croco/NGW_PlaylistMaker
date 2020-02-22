@@ -89,10 +89,10 @@ function getUsers() {
     })
 }
 
-function authUser(username, password) {
-    const query = 'SELECT * FROM users WHERE username = ? AND password = ?'
+function authUser(username) {
+    const query = 'SELECT * FROM users WHERE username = ?'
     return new Promise((resolve, reject) => {
-        db.get(query, [username, password], (err, user) => {
+        db.get(query, username, (err, user) => {
             if (err) {
                 return reject(err)
             }

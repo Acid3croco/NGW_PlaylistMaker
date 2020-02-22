@@ -3,11 +3,13 @@ const session = require('express-session')
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const database = require('./src/database/database')
+const bcrypt = require('bcrypt')
 const port = 8080
 
 const app = express()
 
 var hbs = exphbs.create({ partialsDir: 'views/partials/' })
+const saltRounds = 10
 
 app.engine('handlebars', hbs.engine)
 app.set('view engine', 'handlebars')
@@ -59,6 +61,13 @@ app.get('/login', function (request, response) {
     response.render('login', context)
 })
 
+app.get('/logout', function (request, respose) {
+    request.session.destroy((err) => {
+        console.log(err)
+    })
+    respose.redirect('/explore')
+})
+
 app.post('/signup/create', async (request, response) => {
     const username = request.body.username
     const password = request.body.password
@@ -67,12 +76,14 @@ app.post('/signup/create', async (request, response) => {
     const errors = checkErrorSignUp(username, password, password2)
 
     if (errors == 0) {
-        var res = database.createUser(username, password)
-        res.then((value) => {
-            response.redirect('/login')
-        }, (reason) => {
-            console.log(reason)
-            response.redirect('/signup')
+        bcrypt.hash(password, saltRounds, (err, hash) => {
+            var res = database.createUser(username, hash)
+            res.then((value) => {
+                response.redirect('/login')
+            }, (reason) => {
+                console.log(reason)
+                response.redirect('/signup')
+            })
         })
     } else {
         response.render('signup', { response: 0 })
@@ -86,10 +97,17 @@ app.post('/login', async (request, response) => {
     const errors = checkErrorLogin(username, password)
 
     if (errors == 0) {
-        var res = database.authUser(username, password)
-        res.then((value) => {
-            request.session.user_id = value.user_id
-            response.redirect('/explore/' + request.session.user_id)
+        var res = database.authUser(username)
+        res.then((user) => {
+            bcrypt.compare(password, user.password, (err, result) => {
+                if (result == true) {
+                    request.session.user_id = user.user_id
+                    response.redirect('/explore/' + request.session.user_id)
+                } else {
+                    console.log(err)
+                    response.redirect('/login')
+                }
+            })
         }, (reason) => {
             console.log(reason)
             response.redirect('/login')
