@@ -42,9 +42,24 @@
             <div class="navbar-item">
                 {{#if session.user_id}}
                 <div class="buttons">
-                    <a href="/logout" class="button is-light">
+                    <a href="#modalLogout" class="button is-light">
                         Log out
                     </a>
+                </div>
+                <div id="modalLogout" class="overlay">
+                    <div class="popup">
+                        <h1 class="title is-1">Logout ?</h1>
+                        <a class="close is-danger" href="#">&times;</a>
+                        <div class="">
+                            <h5 class="subtitle is-5">Are you sure you want to Logout ?</h5>
+                            <a href="#" class="button is-danger">
+                                No
+                            </a>
+                            <a href="/logout" class="button is-success">
+                                Yes
+                            </a>
+                        </div>
+                    </div>
                 </div>
                 {{else}}
                 <div class="buttons">

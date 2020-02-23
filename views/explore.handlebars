@@ -1,5 +1,5 @@
 {{#> navbar}}
-<h1 class="title">
+<h1 class="title is-1 is-spaced">
     Explore
 </h1>
 {{#if allplaylists}}
@@ -11,12 +11,12 @@
     {{/each}}
 </div>
 {{else}}
-<div>There is no playlist...</div>
+<h5 class="subtitle is-5">There is no playlist...</h5>
 {{/if}}
 <br />
 
 {{#if session.user_id}}
-    <h1 class="title">
+    <h1 class="title is-1 is-spaced">
         Your playlists
     </h1>
     {{#if myplaylists}}
@@ -28,7 +28,7 @@
         {{/each}}
     </div>
     {{else}}
-    <p>You have no playlists, lets add some</p>
+    <h5 class="subtitle is-5">You have no playlists, lets add some</h5>
     {{/if}}
 {{/if}}
 {{/navbar}}

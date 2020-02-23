@@ -8,8 +8,9 @@ const port = 8080
 
 const app = express()
 
-var hbs = exphbs.create({ partialsDir: 'views/partials/' })
 const saltRounds = 10
+
+var hbs = exphbs.create({ partialsDir: 'views/partials/', helpers: { "equal": require("handlebars-helper-equal") } })
 
 app.engine('handlebars', hbs.engine)
 app.set('view engine', 'handlebars')
@@ -205,6 +206,31 @@ app.get('/playlist/:id', async (request, response) => {
     })
 })
 
+app.post('/playlist/add', async (request, response) => {
+    const name = request.body.name
+
+    const errors = checkErrorPlaylistName(name)
+
+    if (errors == 0) {
+        var res = database.addPlaylist(name, request.session.user_id)
+    }
+    response.redirect('/my-music/' + request.session.user_id)
+})
+
+app.post('/song/add', async (request, response) => {
+    const name = request.body.name
+    const playlistid = request.body.playlistid
+
+    const errors = checkErrorPlaylistName(name)
+
+    if (errors == 0) {
+        var res = database.addSong(name, playlistid)
+        console.log(name)
+        console.log(playlistid)
+    }
+    response.redirect('/playlist/' + playlistid)
+})
+
 app.get('/about', function (request, response) {
     const context = {
         title: 'About',
@@ -230,6 +256,13 @@ function checkIsEmpty(string) {
 
 function checkErrorLogin(username, password) {
     if (checkIsEmpty(username) || checkIsEmpty(password)) {
+        return (-1)
+    }
+    return (0)
+}
+
+function checkErrorPlaylistName(name) {
+    if (checkIsEmpty(name)) {
         return (-1)
     }
     return (0)

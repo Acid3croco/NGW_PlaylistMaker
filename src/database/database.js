@@ -197,6 +197,32 @@ function getSongs() {
     })
 }
 
+function addPlaylist(name, user_id) {
+    const query = "INSERT INTO playlists(user_id, name) VALUES (?, ?)"
+    return new Promise((resolve, reject) => {
+        db.run(query, [user_id, name], (err) => {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(200)
+        })
+    })
+}
+
+function addSong(name, playlist_id) {
+    const query = "INSERT INTO songs(playlist_id, name) VALUES (?, ?)"
+    return new Promise((resolve, reject) => {
+        db.run(query, [playlist_id, name], (err) => {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(200)
+        })
+    })
+}
+
 function getSongsByPlaylistId(playlist_id) {
     const query = 'SELECT * FROM songs WHERE playlist_id = ?'
     return new Promise((resolve, reject) => {
@@ -221,4 +247,4 @@ function createUser(username, password) {
     })
 }
 
-module.exports = { initDatabase, insertDatabase, getUsers, getPlaylists, getPlaylistById, getPlaylistsByUserId, getSongs, getSongsByPlaylistId, getUserById, createUser, authUser }
+module.exports = { initDatabase, insertDatabase, getUsers, getPlaylists, getPlaylistById, getPlaylistsByUserId, getSongs, getSongsByPlaylistId, getUserById, createUser, authUser, addSong, addPlaylist }
