@@ -10,7 +10,7 @@ function initDatabase() {
             console.log("users table created")
         }
     })
-    db.run('CREATE TABLE playlists(playlist_id INTEGER PRIMARY KEY, user_id INTEGER NOT NULL, name TEXT NOT NULL)', function (error) {
+    db.run('CREATE TABLE playlists(playlist_id INTEGER PRIMARY KEY, user_id INTEGER NOT NULL, name TEXT NOT NULL, ispublic BOOLEAN NOT NULL)', function (error) {
         if (error) {
             console.log(error)
         } else {
@@ -135,6 +135,24 @@ function setPlaylistsAuthor(playlists) {
     })
 }
 
+function getPlaylistsPublic() {
+    const query = 'SELECT * FROM playlists WHERE ispublic'
+    return new Promise((resolve, reject) => {
+        db.all(query, (err, playlists) => {
+            if (err) {
+                return reject(err)
+            }
+            if (playlists.length > 0)
+                setPlaylistsAuthor(playlists).then((playlists) => {
+                    resolve(playlists)
+                })
+            else {
+                resolve(playlists)
+            }
+        })
+    })
+}
+
 function getPlaylists() {
     const query = 'SELECT * FROM playlists'
     return new Promise((resolve, reject) => {
@@ -185,6 +203,24 @@ function getPlaylistsByUserId(user_id) {
     })
 }
 
+function getPlaylistsPublicByUserId(user_id) {
+    const query = 'SELECT * FROM playlists WHERE user_id = ? AND ispublic'
+    return new Promise((resolve, reject) => {
+        db.all(query, user_id, (err, playlists) => {
+            if (err) {
+                return reject(err)
+            }
+            if (playlists.length > 0)
+                setPlaylistsAuthor(playlists).then((playlists) => {
+                    resolve(playlists)
+                })
+            else {
+                resolve(playlists)
+            }
+        })
+    })
+}
+
 function getSongs() {
     const query = 'SELECT * FROM songs'
     return new Promise((resolve, reject) => {
@@ -194,6 +230,93 @@ function getSongs() {
             }
             resolve(songs)
         })
+    })
+}
+
+function addPlaylist(user_id, name, ispublic) {
+    const query = "INSERT INTO playlists(user_id, name, ispublic) VALUES (?, ?, ?)"
+    return new Promise((resolve, reject) => {
+        db.run(query, [user_id, name, ispublic], (err) => {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(200)
+        })
+    })
+}
+
+function changeStatus(playlist_id, ispublic) {
+    const query = "UPDATE playlists SET ispublic = ? WHERE playlist_id = ?"
+    if (ispublic == true) {
+        ispublic = 0
+    } else {
+        ispublic = 1
+    }
+    return new Promise((resolve, reject) => {
+        db.run(query, [ispublic, playlist_id], (err) => {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(200)
+        })
+    })
+}
+
+function addSong(name, playlist_id) {
+    const query = "INSERT INTO songs(playlist_id, name) VALUES (?, ?)"
+    return new Promise((resolve, reject) => {
+        db.run(query, [playlist_id, name], (err) => {
+            if (err) {
+                reject(err)
+            }
+            resolve(200)
+        })
+    })
+}
+
+function deleteSong(song_id) {
+    const query = "DELETE FROM songs WHERE song_id = ?"
+    return new Promise((resolve, reject) => {
+        db.run(query, [song_id], (err) => {
+            if (err) {
+                reject(err)
+            }
+            resolve(200)
+        })
+    })
+}
+
+function deleteSongs(paylist_id) {
+    const query = "DELETE FROM songs WHERE playlist_id = ?"
+    return new Promise((resolve, reject) => {
+        db.run(query, [paylist_id], (err) => {
+            if (err) {
+                reject(err)
+            }
+            resolve(200)
+        })
+    })
+}
+
+function deletePlaylist(playlist_id) {
+    const query = "DELETE FROM playlists WHERE playlist_id = ?"
+    const delS = deleteSongs(playlist_id)
+
+    delS.then((res) => {
+        if (res == 200) {
+            return new Promise((resolve, reject) => {
+                db.run(query, [playlist_id], (err) => {
+                    if (err) {
+                        reject(err)
+                    }
+                    resolve(200)
+                })
+            })
+        } else {
+            console.log(res)
+        }
     })
 }
 
@@ -221,4 +344,4 @@ function createUser(username, password) {
     })
 }
 
-module.exports = { initDatabase, insertDatabase, getUsers, getPlaylists, getPlaylistById, getPlaylistsByUserId, getSongs, getSongsByPlaylistId, getUserById, createUser, authUser }
+module.exports = { initDatabase, insertDatabase, getUsers, getPlaylists, getPlaylistById, getPlaylistsByUserId, getSongs, getSongsByPlaylistId, getUserById, createUser, authUser, addSong, addPlaylist, getPlaylistsPublic, getPlaylistsPublicByUserId, deleteSong, changeStatus, deletePlaylist }

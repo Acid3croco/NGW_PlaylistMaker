@@ -1,22 +1,27 @@
 {{#> navbar}}
-<h1 class="title">
+{{#equal session.user_id user.user_id }}
+<h1 class="title is-1 is-spaced">
+    Your Playlists
+</h1>
+<a href="#modalAddPlaylist" class="subtitle is-5 is-spaced button is-primary">Create Playlist</a>
+{{else}}
+<h1 class="title is-1 is-spaced">
     {{user.username}}'s Playlists
 </h1>
+{{/equal}}
 
+<br />
 <div class="columns is-multiline">
     {{#each playlists}}
     <div class="column is-one-quarter">
         {{> playlistCard this user=../user}}
     </div>
     {{/each}}
-    <div class="column is-one-quarter">
-        <div class="card">
-        <div class="card-image">
-            <figure class="image is-square">
-                <img src="/images/logo.png" height="50" width="50" alt="Placeholder image">
-            </figure>
-        </div>
-        </div>
-    </div>
 </div>
+{{#unless playlists}}
+{{#equal session.user_id user.user_id}}
+{{else}}
+<h3 class="subtitle is-3">{{user.username}} has no public playlists</h3>
+{{/equal}}
+{{/unless}}
 {{/navbar}}

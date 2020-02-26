@@ -8,6 +8,22 @@
         <div>
             {{> playlistCard playlist}}
         </div>
+        <br>
+        {{#if user}}
+        {{#equal session.user_id user.user_id }}
+        <a href="#modalAddSong" class="subtitle is-5 is-spaced button is-primary">Add Song</a>
+        <form action="/playlist/changeStatus" method="POST">
+            {{#if playlist.ispublic}}
+            <button type="submit" class="subtitle is-5 is-spaced button is-info">Make Private</button>
+            {{else}}
+            <button type="submit" class="subtitle is-5 is-spaced button is-info">Make Public</button>
+            {{/if}}
+            <input type="hidden" name="ispublic" value={{playlist.ispublic}}>
+            <input type="hidden" name="playlist_id" value={{playlist.playlist_id}}>
+        </form>
+        <a href="#modalDeletePlaylist" class="subtitle is-5 is-spaced button is-danger">Delete Playlist</a>
+        {{/equal}}
+        {{/if}}
     </div>
     <div class="column is-offset-1">
         <table class="table is-hoverable is-fullwidth">
@@ -19,7 +35,19 @@
             <tbody>
                 {{#each songs}}
                 <tr>
-                    <td>{{name}}</td>
+                    <td>
+                        <div class="columns">
+                            <div class="column">
+                                {{name}}
+                            </div>
+                            <div class="column is-1 is-centered has-text-right">
+                                <form method="POST" action="/song/delete">
+                                    <button type="submit" name="song_id" value={{song_id}} class="delete"></button>
+                                    <input type="hidden" name="playlistid" value={{../playlist.playlist_id}}>
+                                </form>
+                            </div>
+                        </div>
+                    </td>
                 </tr>
                 {{/each}}
             </tbody>

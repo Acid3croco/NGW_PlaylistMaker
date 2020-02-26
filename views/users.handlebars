@@ -1,16 +1,16 @@
 {{#> navbar}}
-<h1 class="title">
+<h1 class="title is-1 is-spaced">
     Users
 </h1>
 
 {{#if users}}
-<table class="table is-hoverable is-fullwidth">
+<table class="table is-hoverable is-fullwidth is-striped">
     <tbody>
         {{#each users}}
         <tr>
             <td>
                 <a href="/my-music/{{user_id}}">
-                    {{username}}
+                    <h3 class="subtitle is-3">{{username}}</h3>
                 </a>
             </td>
         </tr>
