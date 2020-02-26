@@ -3,8 +3,9 @@ const session = require('express-session')
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const database = require('./src/database/database')
+const input_helper = require('./src/helpers/input_helper')
 const bcrypt = require('bcrypt')
-const port = 8080
+const port = 8640
 
 const app = express()
 
@@ -62,7 +63,7 @@ app.get('/login', function (request, response) {
     response.render('login', context)
 })
 
-app.get('/logout', function (request, respose) {
+app.post('/logout', function (request, respose) {
     request.session.destroy((err) => {
         console.log(err)
     })
@@ -74,7 +75,7 @@ app.post('/signup/create', async (request, response) => {
     const password = request.body.password
     const password2 = request.body.password2
 
-    const errors = checkErrorSignUp(username, password, password2)
+    const errors = input_helper.checkErrorSignUp(username, password, password2)
 
     if (errors == 0) {
         bcrypt.hash(password, saltRounds, (err, hash) => {
@@ -95,7 +96,7 @@ app.post('/login', async (request, response) => {
     const username = request.body.username
     const password = request.body.password
 
-    const errors = checkErrorLogin(username, password)
+    const errors = input_helper.checkErrorLogin(username, password)
 
     if (errors == 0) {
         var res = database.authUser(username)
@@ -123,8 +124,12 @@ app.post('/login', async (request, response) => {
 })
 
 app.get('/explore/', async (request, response) => {
-    const allplaylists = database.getPlaylists()
+    const allplaylists = database.getPlaylistsPublic()
     const user = database.getUserById(request.params.id)
+
+    if (request.session.user_id) {
+        response.redirect('/explore/' + request.session.user_id)
+    }
 
     Promise.all([allplaylists, user]).then((values) => {
         const context = {
@@ -139,8 +144,8 @@ app.get('/explore/', async (request, response) => {
 })
 
 app.get('/explore/:id', async (request, response) => {
-    const allplaylists = database.getPlaylists()
-    const myplaylists = database.getPlaylistsByUserId(request.session.id)
+    const allplaylists = database.getPlaylistsPublic()
+    const myplaylists = database.getPlaylistsByUserId(request.session.user_id)
     const user = database.getUserById(request.params.id)
 
     Promise.all([allplaylists, myplaylists, user]).then((values) => {
@@ -169,7 +174,7 @@ app.get('/users', async (request, response) => {
 })
 
 app.get('/my-music/:id', async (request, response) => {
-    const playlists = database.getPlaylistsByUserId(request.params.id)
+    const playlists = database.getPlaylistsPublicByUserId(request.params.id)
     const user = database.getUserById(request.params.id)
     let title = ''
 
@@ -192,7 +197,7 @@ app.get('/my-music/:id', async (request, response) => {
 app.get('/playlist/:id', async (request, response) => {
     const songs = database.getSongsByPlaylistId(request.params.id)
     const playlist = database.getPlaylistById(request.params.id)
-    const user = database.getUserById(playlist.user_id)
+    const user = database.getUserById(request.session.user_id)
 
     Promise.all([songs, playlist, user]).then(function (values) {
         const context = {
@@ -208,12 +213,32 @@ app.get('/playlist/:id', async (request, response) => {
 
 app.post('/playlist/add', async (request, response) => {
     const name = request.body.name
+    let ispublic = request.body.ispublic
 
-    const errors = checkErrorPlaylistName(name)
+    const errors = input_helper.checkErrorPlaylistName(name)
+    if (ispublic == "on")
+        ispublic = true
+    else
+        ispublic = false
 
     if (errors == 0) {
-        var res = database.addPlaylist(name, request.session.user_id)
+        var res = database.addPlaylist(request.session.user_id, name, ispublic)
     }
+    response.redirect('/my-music/' + request.session.user_id)
+})
+
+app.post('/playlist/changeStatus', async (request, response) => {
+    const playlist_id = request.body.playlist_id
+    const ispublic = request.body.ispublic
+
+    database.changeStatus(playlist_id, ispublic)
+    response.redirect('/playlist/' + playlist_id)
+})
+
+app.post('/playlist/delete', async (request, response) => {
+    const playlist_id = request.body.playlist_id
+
+    database.deletePlaylist(playlist_id)
     response.redirect('/my-music/' + request.session.user_id)
 })
 
@@ -221,13 +246,19 @@ app.post('/song/add', async (request, response) => {
     const name = request.body.name
     const playlistid = request.body.playlistid
 
-    const errors = checkErrorPlaylistName(name)
+    const errors = input_helper.checkErrorPlaylistName(name)
 
     if (errors == 0) {
         var res = database.addSong(name, playlistid)
-        console.log(name)
-        console.log(playlistid)
     }
+    response.redirect('/playlist/' + playlistid)
+})
+
+app.post('/song/delete', async (request, response) => {
+    const song_id = request.body.song_id
+    const playlistid = request.body.playlistid
+
+    database.deleteSong(song_id)
     response.redirect('/playlist/' + playlistid)
 })
 
@@ -246,36 +277,6 @@ app.get('/contact', function (request, response) {
     }
     response.render('contact', context)
 })
-
-function checkIsEmpty(string) {
-    if (string != null && string != "") {
-        return (false)
-    }
-    return (true)
-}
-
-function checkErrorLogin(username, password) {
-    if (checkIsEmpty(username) || checkIsEmpty(password)) {
-        return (-1)
-    }
-    return (0)
-}
-
-function checkErrorPlaylistName(name) {
-    if (checkIsEmpty(name)) {
-        return (-1)
-    }
-    return (0)
-}
-
-function checkErrorSignUp(username, password, password2) {
-    if (checkIsEmpty(username) || checkIsEmpty(password) || checkIsEmpty(password2)) {
-        return (-1)
-    } else if (password != password2) {
-        return (-1)
-    }
-    return (0)
-}
 
 app.listen(port, () => {
     console.log('Listening on localhost:' + port)

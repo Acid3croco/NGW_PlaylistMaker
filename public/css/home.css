@@ -6,6 +6,9 @@
     height: 100%;
 }
 
+.sign-button {
+  margin-left: 10px;
+}
 
 .overlay {
   position: fixed;
@@ -24,12 +27,15 @@
 }
 
 .popup {
-  margin: 20rem auto;
-  padding: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background: #fff;
+  padding: 20px;
   border-radius: 5px;
-  width: 30%;
-  position: relative;
+  min-width: 30%;
+  width: auto;
   /* transition: all 5s ease-in-out; */
 }
 

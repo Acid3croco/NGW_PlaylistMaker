@@ -1,52 +1,27 @@
 {{#> navbar}}
-    {{#equal session.user_id user.user_id }}
-    <h1 class="title is-1 is-spaced">
-        Your Playlists
-    </h1>
-    <a href="#modalAddPlaylist">
-        <h3 class="subtitle is-3 is-spaced">+ Add new playlist</h3>
-    </a>
-    <div id="modalAddPlaylist" class="overlay">
-        <div class="popup">
-            <h1 class="title is-1">New Playlist</h1>
-            <a class="close is-danger" href="#">&times;</a>
-            <form action="/playlist/add" method="POST">
-                <div class="field">
-                    <p class="control">
-                        <input class="input" placeholder="Playlist name" name="name">
-                    </p>
-                </div>
-                <div class="field">
-                    <p class="control">
-                        <a href="#" class="button is-danger">
-                            Cancel
-                        </a>
-                        <button class="button is-success" type="submit">
-                            Add
-                        </button>
-                    </p>
-                </div>
-            </form>
-        </div>
-    </div>
-    {{else}}
-    <h1 class="title is-1 is-spaced">
-        {{user.username}}'s Playlists
-    </h1>
-    {{/equal}}
+{{#equal session.user_id user.user_id }}
+<h1 class="title is-1 is-spaced">
+    Your Playlists
+</h1>
+<a href="#modalAddPlaylist" class="subtitle is-5 is-spaced button is-primary">Create Playlist</a>
+{{else}}
+<h1 class="title is-1 is-spaced">
+    {{user.username}}'s Playlists
+</h1>
+{{/equal}}
 
-    <br />
-    <div class="columns is-multiline">
-        {{#each playlists}}
-        <div class="column is-one-quarter">
-            {{> playlistCard this user=../user}}
-        </div>
-        {{/each}}
+<br />
+<div class="columns is-multiline">
+    {{#each playlists}}
+    <div class="column is-one-quarter">
+        {{> playlistCard this user=../user}}
     </div>
-    {{#unless playlists}}
-        {{#equal session.user_id user.user_id}}
-        {{else}}
-            <h5 class="subtitle is-5">{{user.username}} has no public playlists</h5>
-        {{/equal}}
-    {{/unless}}
+    {{/each}}
+</div>
+{{#unless playlists}}
+{{#equal session.user_id user.user_id}}
+{{else}}
+<h3 class="subtitle is-3">{{user.username}} has no public playlists</h3>
+{{/equal}}
+{{/unless}}
 {{/navbar}}
