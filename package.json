@@ -1,13 +1,17 @@
 {
   "name": "website_nextgenerationweborsocalled",
   "version": "1.0.0",
-  "description": "",
+  "description": "Next Generation Web project where we buld a web to manage playlists",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Acid3croco/NGW_PlaylistMaker.git"
+  },
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Yoann DITTE",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^4.0.0",
