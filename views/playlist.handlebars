@@ -1,6 +1,10 @@
 {{#> navbar}}
 <nav class="level">
+    {{#if session.user_id}}
+    <a class="button is-rounded" href="/explore/{{session.user_id}}">Back</a>
+    {{else}}
     <a class="button is-rounded" href="/explore">Back</a>
+    {{/if}}
 </nav>
 
 <div class="columns">
@@ -9,10 +13,9 @@
             {{> playlistCard playlist}}
         </div>
         <br>
-        {{#if user}}
-        {{#equal session.user_id user.user_id }}
+        {{#equal session.user_id playlist.author_id }}
         <a href="#modalAddSong" class="subtitle is-5 is-spaced button is-primary">Add Song</a>
-        <form action="/playlist/changeStatus" method="POST">
+        <form action="/playlists/changeStatus" method="POST">
             {{#if playlist.ispublic}}
             <button type="submit" class="subtitle is-5 is-spaced button is-info">Make Private</button>
             {{else}}
@@ -23,7 +26,6 @@
         </form>
         <a href="#modalDeletePlaylist" class="subtitle is-5 is-spaced button is-danger">Delete Playlist</a>
         {{/equal}}
-        {{/if}}
     </div>
     <div class="column is-offset-1">
         <table class="table is-hoverable is-fullwidth">
@@ -40,12 +42,14 @@
                             <div class="column">
                                 {{name}}
                             </div>
+                            {{#equal ../session.user_id ../playlist.author_id }}
                             <div class="column is-1 is-centered has-text-right">
-                                <form method="POST" action="/song/delete">
+                                <form method="POST" action="/songs/delete">
                                     <button type="submit" name="song_id" value={{song_id}} class="delete"></button>
                                     <input type="hidden" name="playlistid" value={{../playlist.playlist_id}}>
                                 </form>
                             </div>
+                            {{/equal}}
                         </div>
                     </td>
                 </tr>

@@ -71,7 +71,7 @@
                         </div>
                         <div>
                             <h5 class="subtitle is-5">Are you sure you want to Logout ?</h5>
-                            <form action="/logout" method="POST">
+                            <form action="/accounts/logout" method="POST">
                                 <div class="field is-grouped">
                                     <div class="control">
                                         <a href="#" class="button is-light">
@@ -91,7 +91,7 @@
                 <div id="modalAddPlaylist" class="overlay">
                     <div class="popup">
                         <h1 class="title is-1">New Playlist</h1>
-                        <form action="/playlist/add" method="POST">
+                        <form action="/playlists/add" method="POST">
                             <div class="field">
                                 <p class="control">
                                     <input class="input" placeholder="Playlist name" name="name">
@@ -124,7 +124,7 @@
                 <div id="modalAddSong" class="overlay">
                     <div class="popup">
                         <h1 class="title is-1">Add Song</h1>
-                        <form method="POST" action="/song/add">
+                        <form method="POST" action="/songs/add">
                             <div class="field">
                                 <p class="control">
                                     <input class="input" placeholder="Song name" name="name">
@@ -149,7 +149,7 @@
                 <div id="modalEditPlaylist" class="overlay">
                     <div class="popup">
                         <h1 class="title is-1">Edit Playlist Name</h1>
-                        <form method="POST" action="/playlist/edit/name">
+                        <form method="POST" action="/playlists/edit/name">
                             <div class="field">
                                 <p class="control">
                                     <input class="input" placeholder="Playlist name" name="name">
@@ -176,7 +176,7 @@
                         <h1 class="title is-1">Delete Playlist ?</h1>
                         <div>
                             <h5 class="subtitle is-5">Are you sure you want to delete this playlist ?</h5>
-                            <form action="/playlist/delete" method="POST">
+                            <form action="/playlists/delete" method="POST">
                                 <input type="hidden" name="playlist_id" value={{playlist.playlist_id}}>
                                 <div class="field is-grouped">
                                     <div class="control">
