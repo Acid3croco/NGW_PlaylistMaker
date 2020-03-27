@@ -1,4 +1,3 @@
-
 const express = require('express')
 const database = require('../database/database')
 const input_helper = require('../helpers/input_helper')

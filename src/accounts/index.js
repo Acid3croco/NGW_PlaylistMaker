@@ -47,6 +47,8 @@ router.post('/login', async (request, response) => {
 
     const errors = input_helper.checkErrorLogin(username, password)
 
+    console.log(request.body)
+
     if (errors == 0) {
         var res = database.authUser(username)
         res.then((user) => {

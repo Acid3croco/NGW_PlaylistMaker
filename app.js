@@ -7,6 +7,7 @@ const app = express()
 const accounts = require('./src/accounts')
 const playlists = require('./src/playlists')
 const songs = require('./src/songs')
+const api = require('./src/api')
 
 const port = 8640
 
@@ -17,6 +18,7 @@ app.set('view engine', 'handlebars')
 
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 
 app.use(session({
     secret: 'uneso6peutencacheruneautre',
@@ -25,8 +27,6 @@ app.use(session({
 }))
 
 database.initDatabase()
-
-// STORE LE TOKEN SESSION DANS LA DB
 
 app.get('/', function (request, response) {
     const context = {
@@ -155,6 +155,7 @@ app.get('/contact', function (request, response) {
 app.use('/accounts', accounts)
 app.use('/playlists', playlists)
 app.use('/songs', songs)
+app.use('/api', api)
 
 app.listen(port, () => {
     console.log('Listening on localhost:' + port)
