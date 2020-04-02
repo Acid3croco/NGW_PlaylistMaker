@@ -22,18 +22,19 @@ const authenticateJWT = (request, response, next) => {
             next();
         });
     } else {
+        console.log("api -> auth")
         response.sendStatus(401);
     }
 };
 
-router.post('/playlists', authenticateJWT, function (request, response) {
+router.post('/playlists', authenticateJWT, function(request, response) {
     const accountId = request.body.accountId
     const name = request.body.name
     const isPublic = request.body.isPublic
     const errors = input_helper.checkErrorPlaylistName(name)
 
     if (errors == -1)
-        response.status(400).end()
+        response.status(400).json({ error: "playlist name empty" })
 
     if (errors == 0) {
         if (request.user.user_id === accountId) {
@@ -45,15 +46,16 @@ router.post('/playlists', authenticateJWT, function (request, response) {
                 response.status(401).end()
             })
         } else {
-            response.status(401).end()
+            console.log("api -> not same user")
+            response.status(401).json({ error: "user not authorized" })
         }
     }
 })
 
-router.post('/songs', authenticateJWT, function (request, response) {
+router.post('/songs', authenticateJWT, function(request, response) {
     const accountId = request.body.accountId
     const name = request.body.name
-    const playlistid = request.body.playlistid
+    const playlistId = request.body.playlistId
     const errors = input_helper.checkErrorPlaylistName(name)
 
     if (errors == -1)
@@ -61,20 +63,29 @@ router.post('/songs', authenticateJWT, function (request, response) {
 
     if (errors == 0) {
         if (request.user.user_id === accountId) {
-            var res = database.addSong(accountId, name, playlistid)
-            res.then((status) => {
-                response.status(200).end()
-            }, (reason) => {
-                console.log(reason)
-                response.status(401).end()
+            var isOwner = database.checkPlaylistIdUserId(accountId, playlistId)
+            isOwner.then((isOwner) => {
+                if (isOwner) {
+                    var res = database.addSong(accountId, name, playlistId)
+                    res.then((status) => {
+                        response.status(200).end()
+                    }, (reason) => {
+                        console.log(reason)
+                        response.status(401).end()
+                    })
+                } else {
+                    console.log("api -> not owner of the playlist")
+                    response.status(401).json({ error: "user is not the owner of the playlist" })
+                }
             })
         } else {
-            response.status(401).end()
+            console.log("api -> not same user")
+            response.status(401).json({ error: "user not authorized" })
         }
     }
 })
 
-router.post('/tokens', async (request, response) => {
+router.post('/tokens', async(request, response) => {
     const username = request.body.username
     const password = request.body.password
 
@@ -117,7 +128,7 @@ router.post('/tokens', async (request, response) => {
     }
 })
 
-router.get('/users', function (request, response) {
+router.get('/users', function(request, response) {
     const users = database.getUsers()
 
     users.then((values) => {
@@ -128,7 +139,7 @@ router.get('/users', function (request, response) {
     })
 })
 
-router.get('/playlists', function (request, response) {
+router.get('/playlists', function(request, response) {
     const playlists = database.getPlaylists()
 
     playlists.then((values) => {

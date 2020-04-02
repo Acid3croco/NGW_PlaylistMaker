@@ -5,21 +5,22 @@ const input_helper = require('../helpers/input_helper')
 const router = express.Router();
 const saltRounds = 10
 
-router.get('/', function (request, response) {
+router.get('/', function(request, response) {
     const context = {
         title: 'Signup'
     }
     response.render('signup', context)
 })
 
-router.post('/logout', function (request, respose) {
+router.post('/logout', function(request, respose) {
     request.session.destroy((err) => {
-        console.log(err)
+        if (err)
+            console.log(err)
     })
     respose.redirect('/explore')
 })
 
-router.post('/create', async (request, response) => {
+router.post('/create', async(request, response) => {
     const username = request.body.username
     const password = request.body.password
     const password2 = request.body.password2
@@ -41,7 +42,7 @@ router.post('/create', async (request, response) => {
     }
 })
 
-router.post('/login', async (request, response) => {
+router.post('/login', async(request, response) => {
     const username = request.body.username
     const password = request.body.password
 
