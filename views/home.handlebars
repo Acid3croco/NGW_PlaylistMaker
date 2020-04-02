@@ -1,17 +1,20 @@
-{{#> navbar}}
-<section class="hero is-fullheight-with-navbar">
+{{#> headerbar}}
+{{/headerbar}}
+<section class="hero is-fullheight-with-navbar is-fullheight-with-custom-navbar">
     <div class="hero-body">
         <div class="container has-text-centered">
-            <h1 class="title is-1">
-                Title
+            <h1 class="title is-1 is-spaced">
+                Share your tastes
             </h1>
-            <h2 class="subtitle is-3">
-                Description
+            <h2 class="subtitle is-3 ">
+                Seamlessly Create, Manage and Share your music with Playlist Maker
+                <br />
+                Join a Community of passionate people to experience a new way of exploring music
             </h2>
             <div class="column is-4 is-offset-4">
-                <a href="/explore/{{session.user_id}}" class="button is-rounded is-primary is-large is-fullwidth">Start Exploring</a>
+                <a href="/explore/{{session.user_id}}" class="button is-rounded is-primary is-large is-fullwidth title is-3">Start
+                    Exploring</a>
             </div>
         </div>
     </div>
 </section>
-{{/navbar}}

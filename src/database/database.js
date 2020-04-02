@@ -266,21 +266,14 @@ function changeStatus(playlist_id, ispublic) {
 
 function addSong(user_id, name, playlist_id) {
     const query = "INSERT INTO songs(playlist_id, name) VALUES (?, ?)"
-    const isOwner = checkPlaylistIdUserId(user_id, playlist_id)
 
-    isOwner.then((res) => {
-        if (!res)
-            return (401)
-        return new Promise((resolve, reject) => {
-            db.run(query, [playlist_id, name], (err) => {
-                if (err) {
-                    reject(err)
-                }
-                resolve(200)
-            })
+    return new Promise((resolve, reject) => {
+        db.run(query, [playlist_id, name], (err) => {
+            if (err) {
+                reject(err)
+            }
+            resolve(200)
         })
-    }).catch((reason) => {
-        reject(reason)
     })
 }
 
@@ -325,6 +318,8 @@ function deletePlaylist(playlist_id) {
         } else {
             console.log(res)
         }
+    }).catch((reason) => {
+        console.log(reason)
     })
 }
 
@@ -363,9 +358,9 @@ function checkPlaylistIdUserId(user_id, playlist_id) {
             resolve(false)
         }).catch((reason) => {
             console.log(reason)
-            reject(false)
+            reject(reason)
         })
     })
 }
 
-module.exports = { initDatabase, insertDatabase, getUsers, getPlaylists, getPlaylistById, getPlaylistsByUserId, getSongs, getSongsByPlaylistId, getUserById, createUser, authUser, addSong, addPlaylist, getPlaylistsPublic, getPlaylistsPublicByUserId, deleteSong, changeStatus, deletePlaylist }
+module.exports = { initDatabase, insertDatabase, getUsers, getPlaylists, getPlaylistById, getPlaylistsByUserId, getSongs, getSongsByPlaylistId, getUserById, createUser, authUser, addSong, addPlaylist, getPlaylistsPublic, getPlaylistsPublicByUserId, deleteSong, changeStatus, deletePlaylist, checkPlaylistIdUserId }
