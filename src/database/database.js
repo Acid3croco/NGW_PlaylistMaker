@@ -3,21 +3,21 @@ const db = new sqlite3.Database('./public/database/database.db', sqlite3.OPEN_RE
 
 function initDatabase() {
     db.serialize()
-    db.run('CREATE TABLE users(user_id INTEGER PRIMARY KEY, username TEXT NOT NULL UNIQUE, password TEXT NOT NULL)', function (error) {
+    db.run('CREATE TABLE users(user_id INTEGER PRIMARY KEY, username TEXT NOT NULL UNIQUE, password TEXT NOT NULL)', function(error) {
         if (error) {
             //console.log(error)
         } else {
             console.log("users table created")
         }
     })
-    db.run('CREATE TABLE playlists(playlist_id INTEGER PRIMARY KEY, user_id INTEGER NOT NULL, name TEXT NOT NULL, ispublic BOOLEAN NOT NULL)', function (error) {
+    db.run('CREATE TABLE playlists(playlist_id INTEGER PRIMARY KEY, user_id INTEGER NOT NULL, name TEXT NOT NULL, ispublic BOOLEAN NOT NULL)', function(error) {
         if (error) {
             //console.log(error)
         } else {
             console.log("playlists table created")
         }
     })
-    db.run('CREATE TABLE songs(song_id INTEGER PRIMARY KEY, playlist_id INTEGER NOT NULL, name TEXT NOT NULL)', function (error) {
+    db.run('CREATE TABLE songs(song_id INTEGER PRIMARY KEY, playlist_id INTEGER NOT NULL, name TEXT NOT NULL)', function(error) {
         if (error) {
             //console.log(error)
         } else {
@@ -28,49 +28,49 @@ function initDatabase() {
 
 function insertDatabase() {
     var query = "INSERT INTO users(username, password) VALUES ('Alice', 'so6')"
-    db.run(query, function (error) {
+    db.run(query, function(error) {
         if (error) {
             console.log(error)
         }
     })
     query = "INSERT INTO users(username, password) VALUES ('Kevin', 'so6')"
-    db.run(query, function (error) {
+    db.run(query, function(error) {
         if (error) {
             console.log(error)
         }
     })
     query = "INSERT INTO playlists(user_id, name) VALUES (1, 'playlist de Alice')"
-    db.run(query, function (error) {
+    db.run(query, function(error) {
         if (error) {
             console.log(error)
         }
     })
     query = "INSERT INTO playlists(user_id, name) VALUES (2, 'playlist de Kevin')"
-    db.run(query, function (error) {
+    db.run(query, function(error) {
         if (error) {
             console.log(error)
         }
     })
     query = "INSERT INTO songs(playlist_id, name) VALUES (1, 'song 1')"
-    db.run(query, function (error) {
+    db.run(query, function(error) {
         if (error) {
             console.log(error)
         }
     })
     query = "INSERT INTO songs(playlist_id, name) VALUES (1, 'song 2')"
-    db.run(query, function (error) {
+    db.run(query, function(error) {
         if (error) {
             console.log(error)
         }
     })
     query = "INSERT INTO songs(playlist_id, name) VALUES (2, 'song 1')"
-    db.run(query, function (error) {
+    db.run(query, function(error) {
         if (error) {
             console.log(error)
         }
     })
     query = "INSERT INTO songs(playlist_id, name) VALUES (2, 'song 2')"
-    db.run(query, function (error) {
+    db.run(query, function(error) {
         if (error) {
             console.log(error)
         }
@@ -126,7 +126,7 @@ function setPlaylistAuthor(playlist) {
 
 function setPlaylistsAuthor(playlists) {
     return new Promise((resolve, reject) => {
-        playlists.forEach(async (playlist, a) => {
+        playlists.forEach(async(playlist, a) => {
             setPlaylistAuthor(playlist).then((playlist) => {
                 if (a == playlists.length - 1)
                     resolve(playlists)
@@ -269,7 +269,6 @@ function addSong(user_id, name, playlist_id) {
     const isOwner = checkPlaylistIdUserId(user_id, playlist_id)
 
     isOwner.then((res) => {
-        console.log("isOwner? " + res)
         if (!res)
             return (401)
         return new Promise((resolve, reject) => {
@@ -358,11 +357,7 @@ function checkPlaylistIdUserId(user_id, playlist_id) {
 
     return new Promise((resolve, reject) => {
         playlists.then((playlists) => {
-            console.log(user_id)
-            console.log(playlist_id)
-            console.log(playlists)
             if (playlists.find(playlist => playlist.playlist_id === parseInt(playlist_id))) {
-                console.log("ONELA")
                 resolve(true)
             }
             resolve(false)
