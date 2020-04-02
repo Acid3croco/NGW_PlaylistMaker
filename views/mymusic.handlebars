@@ -20,6 +20,7 @@
 </div>
 {{#unless playlists}}
 {{#equal session.user_id user.user_id}}
+<h3 class="subtitle is-3">You have no playlists, <a href="#modalAddPlaylist"> create a new one!</a></h3>
 {{else}}
 <h3 class="subtitle is-3">{{user.username}} has no public playlists</h3>
 {{/equal}}

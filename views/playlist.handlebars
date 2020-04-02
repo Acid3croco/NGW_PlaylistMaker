@@ -1,10 +1,12 @@
 {{#> navbar}}
 <nav class="level">
-    {{#if session.user_id}}
-    <a class="button is-rounded" href="/explore/{{session.user_id}}">Back</a>
-    {{else}}
-    <a class="button is-rounded" href="/explore">Back</a>
-    {{/if}}
+    <h1 class="title is-1 is-spaced">
+        {{#if session.user_id}}
+        <a class="button is-rounded" href="/explore/{{session.user_id}}">Back</a>
+        {{else}}
+        <a class="button is-rounded" href="/explore">Back</a>
+        {{/if}}
+    </h1>
 </nav>
 
 <div class="columns">

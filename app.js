@@ -7,6 +7,7 @@ const app = express()
 const accounts = require('./src/accounts')
 const playlists = require('./src/playlists')
 const songs = require('./src/songs')
+const api = require('./src/api')
 
 const port = 8640
 
@@ -17,6 +18,7 @@ app.set('view engine', 'handlebars')
 
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 
 app.use(session({
     secret: 'uneso6peutencacheruneautre',
@@ -26,11 +28,9 @@ app.use(session({
 
 database.initDatabase()
 
-// STORE LE TOKEN SESSION DANS LA DB
-
 app.get('/', function (request, response) {
     const context = {
-        title: 'Landing page',
+        title: 'Home',
         session: request.session
     }
     response.render('home', context)
@@ -115,9 +115,14 @@ app.get('/users', async (request, response) => {
 })
 
 app.get('/my-music/:id', async (request, response) => {
-    const playlists = database.getPlaylistsPublicByUserId(request.params.id)
     const user = database.getUserById(request.params.id)
     let title = ''
+    let playlists = null
+
+    if (request.params.id == request.session.user_id)
+        playlists = database.getPlaylistsByUserId(request.params.id)
+    else
+        playlists = database.getPlaylistsPublicByUserId(request.params.id)
 
     Promise.all([playlists, user]).then((values) => {
         if (request.params.id == request.session.user_id) {
@@ -130,6 +135,7 @@ app.get('/my-music/:id', async (request, response) => {
             session: request.session,
             playlists: values[0],
             user: values[1]
+
         }
         response.render('mymusic', context)
     })
@@ -155,6 +161,7 @@ app.get('/contact', function (request, response) {
 app.use('/accounts', accounts)
 app.use('/playlists', playlists)
 app.use('/songs', songs)
+app.use('/api', api)
 
 app.listen(port, () => {
     console.log('Listening on localhost:' + port)

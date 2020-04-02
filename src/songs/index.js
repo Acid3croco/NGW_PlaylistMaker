@@ -10,7 +10,7 @@ router.post('/add', async (request, response) => {
     const errors = input_helper.checkErrorPlaylistName(name)
 
     if (errors == 0) {
-        var res = database.addSong(name, playlistid)
+        var res = database.addSong(request.session.user_id, name, playlistid)
     }
     response.redirect('/playlists/' + playlistid)
 })
