@@ -51,19 +51,26 @@ router.post('/playlists', authenticateJWT, function (request, response) {
 })
 
 router.post('/songs', authenticateJWT, function (request, response) {
+    const accountId = request.body.accountId
     const name = request.body.name
     const playlistid = request.body.playlistid
-
     const errors = input_helper.checkErrorPlaylistName(name)
 
+    if (errors == -1)
+        response.status(400).end()
+
     if (errors == 0) {
-        var res = database.addSong(name, playlistid)
-        res.then((status) => {
-            response.status(200).end()
-        }, (reason) => {
-            console.log(reason)
-            response.status(400).end()
-        })
+        if (request.user.user_id === accountId) {
+            var res = database.addSong(accountId, name, playlistid)
+            res.then((status) => {
+                response.status(200).end()
+            }, (reason) => {
+                console.log(reason)
+                response.status(401).end()
+            })
+        } else {
+            response.status(401).end()
+        }
     }
 })
 

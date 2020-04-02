@@ -264,15 +264,24 @@ function changeStatus(playlist_id, ispublic) {
     })
 }
 
-function addSong(name, playlist_id) {
+function addSong(user_id, name, playlist_id) {
     const query = "INSERT INTO songs(playlist_id, name) VALUES (?, ?)"
-    return new Promise((resolve, reject) => {
-        db.run(query, [playlist_id, name], (err) => {
-            if (err) {
-                reject(err)
-            }
-            resolve(200)
+    const isOwner = checkPlaylistIdUserId(user_id, playlist_id)
+
+    isOwner.then((res) => {
+        console.log("isOwner? " + res)
+        if (!res)
+            return (401)
+        return new Promise((resolve, reject) => {
+            db.run(query, [playlist_id, name], (err) => {
+                if (err) {
+                    reject(err)
+                }
+                resolve(200)
+            })
         })
+    }).catch((reason) => {
+        reject(reason)
     })
 }
 
@@ -340,6 +349,26 @@ function createUser(username, password) {
                 reject(err)
             }
             resolve(200)
+        })
+    })
+}
+
+function checkPlaylistIdUserId(user_id, playlist_id) {
+    const playlists = getPlaylistsByUserId(user_id)
+
+    return new Promise((resolve, reject) => {
+        playlists.then((playlists) => {
+            console.log(user_id)
+            console.log(playlist_id)
+            console.log(playlists)
+            if (playlists.find(playlist => playlist.playlist_id === parseInt(playlist_id))) {
+                console.log("ONELA")
+                resolve(true)
+            }
+            resolve(false)
+        }).catch((reason) => {
+            console.log(reason)
+            reject(false)
         })
     })
 }
