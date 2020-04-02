@@ -30,7 +30,7 @@ database.initDatabase()
 
 app.get('/', function (request, response) {
     const context = {
-        title: 'Landing page',
+        title: 'Home',
         session: request.session
     }
     response.render('home', context)
@@ -115,9 +115,14 @@ app.get('/users', async (request, response) => {
 })
 
 app.get('/my-music/:id', async (request, response) => {
-    const playlists = database.getPlaylistsPublicByUserId(request.params.id)
     const user = database.getUserById(request.params.id)
     let title = ''
+    let playlists = null
+
+    if (request.params.id == request.session.user_id)
+        playlists = database.getPlaylistsByUserId(request.params.id)
+    else
+        playlists = database.getPlaylistsPublicByUserId(request.params.id)
 
     Promise.all([playlists, user]).then((values) => {
         if (request.params.id == request.session.user_id) {
@@ -130,6 +135,7 @@ app.get('/my-music/:id', async (request, response) => {
             session: request.session,
             playlists: values[0],
             user: values[1]
+
         }
         response.render('mymusic', context)
     })

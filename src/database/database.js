@@ -5,21 +5,21 @@ function initDatabase() {
     db.serialize()
     db.run('CREATE TABLE users(user_id INTEGER PRIMARY KEY, username TEXT NOT NULL UNIQUE, password TEXT NOT NULL)', function (error) {
         if (error) {
-            console.log(error)
+            //console.log(error)
         } else {
             console.log("users table created")
         }
     })
     db.run('CREATE TABLE playlists(playlist_id INTEGER PRIMARY KEY, user_id INTEGER NOT NULL, name TEXT NOT NULL, ispublic BOOLEAN NOT NULL)', function (error) {
         if (error) {
-            console.log(error)
+            //console.log(error)
         } else {
             console.log("playlists table created")
         }
     })
     db.run('CREATE TABLE songs(song_id INTEGER PRIMARY KEY, playlist_id INTEGER NOT NULL, name TEXT NOT NULL)', function (error) {
         if (error) {
-            console.log(error)
+            //console.log(error)
         } else {
             console.log("songs table created")
         }

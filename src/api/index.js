@@ -26,48 +26,27 @@ const authenticateJWT = (request, response, next) => {
     }
 };
 
-router.get('/users', function (request, response) {
-    const users = database.getUsers()
-
-    users.then((values) => {
-        if (values)
-            response.status(200).json(values)
-        else
-            response.status(404).end()
-    })
-})
-
-router.get('/playlists', function (request, response) {
-    const playlists = database.getPlaylists()
-
-    playlists.then((values) => {
-        if (values)
-            response.status(200).json(values)
-        else
-            response.status(404).end()
-    })
-})
-
 router.post('/playlists', authenticateJWT, function (request, response) {
+    const accountId = request.body.accountId
     const name = request.body.name
-    let ispublic = request.body.ispublic
-
+    const isPublic = request.body.isPublic
     const errors = input_helper.checkErrorPlaylistName(name)
-    if (errors)
+
+    if (errors == -1)
         response.status(400).end()
-    if (ispublic == "on")
-        ispublic = true
-    else
-        ispublic = false
 
     if (errors == 0) {
-        var res = database.addPlaylist(request.user.user_id, name, ispublic)
-        res.then((status) => {
-            response.status(200).end()
-        }, (reason) => {
-            console.log(reason)
-            response.status(400).end()
-        })
+        if (request.user.user_id === accountId) {
+            var res = database.addPlaylist(accountId, name, isPublic)
+            res.then((status) => {
+                response.status(200).end()
+            }, (reason) => {
+                console.log(reason)
+                response.status(401).end()
+            })
+        } else {
+            response.status(401).end()
+        }
     }
 })
 
@@ -100,34 +79,57 @@ router.post('/tokens', async (request, response) => {
             if (user) {
                 bcrypt.compare(password, user.password, (err, result) => {
                     if (result == true) {
-                        const accessToken = jwt.sign({
+                        const access_token = jwt.sign({
                             user_id: user.user_id
                         }, accessTokenSecret)
 
-                        const idToken = jwt.sign({
-                            user_id: user.user_id,
-                            username: user.username,
+                        const id_token = jwt.sign({
+                            sub: user.user_id,
+                            preferred_username: user.username,
                         }, accessTokenSecret)
 
                         response.status(200).json({
-                            accessToken: accessToken,
-                            idToken: idToken
+                            access_token: access_token,
+                            token_type: "Bearer",
+                            id_token: id_token
                         })
                     } else {
                         console.log(err)
-                        response.status(400).end()
+                        response.status(400).json({ "error": "invalid_grant" })
                     }
                 })
             } else {
-                response.status(400).end()
+                response.status(400).json({ "error": "invalid_grant" })
             }
         }, (reason) => {
             console.log(reason)
-            response.status(400).end()
+            response.status(400).json({ "error": "invalid_grant" })
         })
     } else {
-        response.status(400).end()
+        response.status(400).json({ "error": "invalid_grant" })
     }
+})
+
+router.get('/users', function (request, response) {
+    const users = database.getUsers()
+
+    users.then((values) => {
+        if (values)
+            response.status(200).json(values)
+        else
+            response.status(404).end()
+    })
+})
+
+router.get('/playlists', function (request, response) {
+    const playlists = database.getPlaylists()
+
+    playlists.then((values) => {
+        if (values)
+            response.status(200).json(values)
+        else
+            response.status(404).end()
+    })
 })
 
 module.exports = router
