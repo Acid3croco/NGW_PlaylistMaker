@@ -34,7 +34,7 @@ router.post('/playlists', authenticateJWT, function(request, response) {
     const errors = input_helper.checkErrorPlaylistName(name)
 
     if (errors == -1)
-        response.status(400).end()
+        response.status(400).json({ error: "playlist name empty" })
 
     if (errors == 0) {
         if (request.user.user_id === accountId) {
@@ -47,7 +47,7 @@ router.post('/playlists', authenticateJWT, function(request, response) {
             })
         } else {
             console.log("api -> not same user")
-            response.status(401).end()
+            response.status(401).json({ error: "user not authorized" })
         }
     }
 })
@@ -75,12 +75,12 @@ router.post('/songs', authenticateJWT, function(request, response) {
                     })
                 } else {
                     console.log("api -> not owner of the playlist")
-                    response.status(401).end()
+                    response.status(401).json({ error: "user is not the owner of the playlist" })
                 }
             })
         } else {
             console.log("api -> not same user")
-            response.status(401).end()
+            response.status(401).json({ error: "user not authorized" })
         }
     }
 })
