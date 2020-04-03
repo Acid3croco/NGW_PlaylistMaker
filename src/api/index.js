@@ -17,7 +17,6 @@ const authenticateJWT = (request, response, next) => {
             if (err) {
                 return response.sendStatus(403);
             }
-
             request.user = user;
             next();
         });
@@ -40,7 +39,7 @@ router.post('/playlists', authenticateJWT, function(request, response) {
         if (request.user.user_id === accountId) {
             var res = database.addPlaylist(accountId, name, isPublic)
             res.then((status) => {
-                response.status(200).end()
+                response.status(204).end()
             }, (reason) => {
                 console.log(reason)
                 response.status(401).end()
@@ -68,7 +67,7 @@ router.post('/songs', authenticateJWT, function(request, response) {
                 if (isOwner) {
                     var res = database.addSong(accountId, name, playlistId)
                     res.then((status) => {
-                        response.status(200).end()
+                        response.status(204).end()
                     }, (reason) => {
                         console.log(reason)
                         response.status(401).end()

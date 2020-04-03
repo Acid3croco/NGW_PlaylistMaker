@@ -1,4 +1,6 @@
 # My rules
+.vscode/
+public/database/database.db
 
 # Logs
 logs
@@ -110,3 +112,4 @@ dist
 
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
+public/.DS_Store
