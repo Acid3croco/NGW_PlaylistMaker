@@ -1,6 +1,7 @@
 # My rules
 .vscode/
 public/database/database.db
+package-lock.json
 
 # Logs
 logs
