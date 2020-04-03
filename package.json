@@ -1,27 +1,26 @@
 {
-  "name": "website_nextgenerationweborsocalled",
-  "version": "1.0.0",
-  "description": "Next Generation Web project where we buld a web to manage playlists",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Acid3croco/NGW_PlaylistMaker.git"
-  },
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "Yoann DITTE",
-  "license": "ISC",
-  "dependencies": {
-    "bcrypt": "^4.0.0",
-    "body-parser": "^1.19.0",
-    "express": "^4.17.1",
-    "express-handlebars": "^3.1.0",
-    "express-session": "^1.17.0",
-    "handlebars-helper-equal": "^1.0.0",
-    "jsonwebtoken": "^8.5.1",
-    "spectre-css": "^1.0.0",
-    "sqlite3": "^4.1.1"
-  }
+    "name": "website_nextgenerationweborsocalled",
+    "version": "1.0.0",
+    "description": "Next Generation Web project where we buld a web to manage playlists",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Acid3croco/NGW_PlaylistMaker.git"
+    },
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "Yoann DITTE",
+    "license": "ISC",
+    "dependencies": {
+        "bcrypt": "^4.0.0",
+        "body-parser": "^1.19.0",
+        "express": "^4.17.1",
+        "express-handlebars": "^3.1.0",
+        "express-session": "^1.17.0",
+        "handlebars-helper-equal": "^1.0.0",
+        "jsonwebtoken": "^8.5.1",
+        "sqlite3": "^4.1.1"
+    }
 }
