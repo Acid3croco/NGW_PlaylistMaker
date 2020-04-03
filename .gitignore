@@ -115,3 +115,6 @@ dist
 .vscode-test
 public/.DS_Store
 .DS_Store
+Next Generation Web - Playlist Maker Example.postman_collection.json
+NGW_PlaylistMaker.postman_environment.json
+README
