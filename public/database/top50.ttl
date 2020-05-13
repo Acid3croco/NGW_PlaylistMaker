@@ -1,0 +1,361 @@
+@prefix dbo: <http://dbpedia.org/ontology/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix mo: <http://purl.org/ontology/mo/> .
+@prefix ns1: <http://purl.org/stuff/rev#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rt: <http://purl.org/stuff/rev#rating> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<1> a mo:Track ;
+    dbo:code "1"^^xsd:string ;
+    dc:title "Se�orita"^^xsd:string ;
+    mo:Genre "canadian pop"^^xsd:string ;
+    ns1:ratingRating 79.0 ;
+    foaf:maker "Shawn Mendes"^^xsd:string .
+
+<10> a mo:Track ;
+    dbo:code "10"^^xsd:string ;
+    dc:title "bad guy"^^xsd:string ;
+    mo:Genre "electropop"^^xsd:string ;
+    ns1:ratingRating 95.0 ;
+    foaf:maker "Billie Eilish"^^xsd:string .
+
+<11> a mo:Track ;
+    dbo:code "11"^^xsd:string ;
+    dc:title "Callaita"^^xsd:string ;
+    mo:Genre "reggaeton"^^xsd:string ;
+    ns1:ratingRating 93.0 ;
+    foaf:maker "Bad Bunny"^^xsd:string .
+
+<12> a mo:Track ;
+    dbo:code "12"^^xsd:string ;
+    dc:title "Loco Contigo (feat. J. Balvin & Tyga)"^^xsd:string ;
+    mo:Genre "dance pop"^^xsd:string ;
+    ns1:ratingRating 86.0 ;
+    foaf:maker "DJ Snake"^^xsd:string .
+
+<13> a mo:Track ;
+    dbo:code "13"^^xsd:string ;
+    dc:title "Someone You Loved"^^xsd:string ;
+    mo:Genre "pop"^^xsd:string ;
+    ns1:ratingRating 88.0 ;
+    foaf:maker "Lewis Capaldi"^^xsd:string .
+
+<14> a mo:Track ;
+    dbo:code "14"^^xsd:string ;
+    dc:title "Otro Trago - Remix"^^xsd:string ;
+    mo:Genre "panamanian pop"^^xsd:string ;
+    ns1:ratingRating 87.0 ;
+    foaf:maker "Sech"^^xsd:string .
+
+<15> a mo:Track ;
+    dbo:code "15"^^xsd:string ;
+    dc:title "Money In The Grave (Drake ft. Rick Ross)"^^xsd:string ;
+    mo:Genre "canadian hip hop"^^xsd:string ;
+    ns1:ratingRating 92.0 ;
+    foaf:maker "Drake"^^xsd:string .
+
+<16> a mo:Track ;
+    dbo:code "16"^^xsd:string ;
+    dc:title "No Guidance (feat. Drake)"^^xsd:string ;
+    mo:Genre "dance pop"^^xsd:string ;
+    ns1:ratingRating 82.0 ;
+    foaf:maker "Chris Brown"^^xsd:string .
+
+<17> a mo:Track ;
+    dbo:code "17"^^xsd:string ;
+    dc:title "LA CANCI�N"^^xsd:string ;
+    mo:Genre "latin"^^xsd:string ;
+    ns1:ratingRating 90.0 ;
+    foaf:maker "J Balvin"^^xsd:string .
+
+<18> a mo:Track ;
+    dbo:code "18"^^xsd:string ;
+    dc:title "Sunflower - Spider-Man: Into the Spider-Verse"^^xsd:string ;
+    mo:Genre "dfw rap"^^xsd:string ;
+    ns1:ratingRating 91.0 ;
+    foaf:maker "Post Malone"^^xsd:string .
+
+<19> a mo:Track ;
+    dbo:code "19"^^xsd:string ;
+    dc:title "Lalala"^^xsd:string ;
+    mo:Genre "canadian hip hop"^^xsd:string ;
+    ns1:ratingRating 88.0 ;
+    foaf:maker "Y2K"^^xsd:string .
+
+<2> a mo:Track ;
+    dbo:code "2"^^xsd:string ;
+    dc:title "China"^^xsd:string ;
+    mo:Genre "reggaeton flow"^^xsd:string ;
+    ns1:ratingRating 92.0 ;
+    foaf:maker "Anuel AA"^^xsd:string .
+
+<20> a mo:Track ;
+    dbo:code "20"^^xsd:string ;
+    dc:title "Truth Hurts"^^xsd:string ;
+    mo:Genre "escape room"^^xsd:string ;
+    ns1:ratingRating 91.0 ;
+    foaf:maker "Lizzo"^^xsd:string .
+
+<21> a mo:Track ;
+    dbo:code "21"^^xsd:string ;
+    dc:title "Piece Of Your Heart"^^xsd:string ;
+    mo:Genre "pop house"^^xsd:string ;
+    ns1:ratingRating 91.0 ;
+    foaf:maker "MEDUZA"^^xsd:string .
+
+<22> a mo:Track ;
+    dbo:code "22"^^xsd:string ;
+    dc:title "Panini"^^xsd:string ;
+    mo:Genre "country rap"^^xsd:string ;
+    ns1:ratingRating 91.0 ;
+    foaf:maker "Lil Nas X"^^xsd:string .
+
+<23> a mo:Track ;
+    dbo:code "23"^^xsd:string ;
+    dc:title "No Me Conoce - Remix"^^xsd:string ;
+    mo:Genre "reggaeton flow"^^xsd:string ;
+    ns1:ratingRating 83.0 ;
+    foaf:maker "Jhay Cortez"^^xsd:string .
+
+<24> a mo:Track ;
+    dbo:code "24"^^xsd:string ;
+    dc:title "Soltera - Remix"^^xsd:string ;
+    mo:Genre "latin"^^xsd:string ;
+    ns1:ratingRating 91.0 ;
+    foaf:maker "Lunay"^^xsd:string .
+
+<25> a mo:Track ;
+    dbo:code "25"^^xsd:string ;
+    dc:title "bad guy (with Justin Bieber)"^^xsd:string ;
+    mo:Genre "electropop"^^xsd:string ;
+    ns1:ratingRating 89.0 ;
+    foaf:maker "Billie Eilish"^^xsd:string .
+
+<26> a mo:Track ;
+    dbo:code "26"^^xsd:string ;
+    dc:title "If I Can't Have You"^^xsd:string ;
+    mo:Genre "canadian pop"^^xsd:string ;
+    ns1:ratingRating 70.0 ;
+    foaf:maker "Shawn Mendes"^^xsd:string .
+
+<27> a mo:Track ;
+    dbo:code "27"^^xsd:string ;
+    dc:title "Dance Monkey"^^xsd:string ;
+    mo:Genre "australian pop"^^xsd:string ;
+    ns1:ratingRating 83.0 ;
+    foaf:maker "Tones and I"^^xsd:string .
+
+<28> a mo:Track ;
+    dbo:code "28"^^xsd:string ;
+    dc:title "It's You"^^xsd:string ;
+    mo:Genre "canadian hip hop"^^xsd:string ;
+    ns1:ratingRating 89.0 ;
+    foaf:maker "Ali Gatie"^^xsd:string .
+
+<29> a mo:Track ;
+    dbo:code "29"^^xsd:string ;
+    dc:title "Con Calma"^^xsd:string ;
+    mo:Genre "latin"^^xsd:string ;
+    ns1:ratingRating 91.0 ;
+    foaf:maker "Daddy Yankee"^^xsd:string .
+
+<3> a mo:Track ;
+    dbo:code "3"^^xsd:string ;
+    dc:title "boyfriend (with Social House)"^^xsd:string ;
+    mo:Genre "dance pop"^^xsd:string ;
+    ns1:ratingRating 85.0 ;
+    foaf:maker "Ariana Grande"^^xsd:string .
+
+<30> a mo:Track ;
+    dbo:code "30"^^xsd:string ;
+    dc:title "QUE PRETENDES"^^xsd:string ;
+    mo:Genre "latin"^^xsd:string ;
+    ns1:ratingRating 89.0 ;
+    foaf:maker "J Balvin"^^xsd:string .
+
+<31> a mo:Track ;
+    dbo:code "31"^^xsd:string ;
+    dc:title "Takeaway"^^xsd:string ;
+    mo:Genre "edm"^^xsd:string ;
+    ns1:ratingRating 84.0 ;
+    foaf:maker "The Chainsmokers"^^xsd:string .
+
+<32> a mo:Track ;
+    dbo:code "32"^^xsd:string ;
+    dc:title "7 rings"^^xsd:string ;
+    mo:Genre "dance pop"^^xsd:string ;
+    ns1:ratingRating 89.0 ;
+    foaf:maker "Ariana Grande"^^xsd:string .
+
+<33> a mo:Track ;
+    dbo:code "33"^^xsd:string ;
+    dc:title "0.958333333333333"^^xsd:string ;
+    mo:Genre "reggaeton"^^xsd:string ;
+    ns1:ratingRating 89.0 ;
+    foaf:maker "Maluma"^^xsd:string .
+
+<34> a mo:Track ;
+    dbo:code "34"^^xsd:string ;
+    dc:title "The London (feat. J. Cole & Travis Scott)"^^xsd:string ;
+    mo:Genre "atl hip hop"^^xsd:string ;
+    ns1:ratingRating 89.0 ;
+    foaf:maker "Young Thug"^^xsd:string .
+
+<35> a mo:Track ;
+    dbo:code "35"^^xsd:string ;
+    dc:title "Never Really Over"^^xsd:string ;
+    mo:Genre "dance pop"^^xsd:string ;
+    ns1:ratingRating 89.0 ;
+    foaf:maker "Katy Perry"^^xsd:string .
+
+<36> a mo:Track ;
+    dbo:code "36"^^xsd:string ;
+    dc:title "Summer Days (feat. Macklemore & Patrick Stump of Fall Out Boy)"^^xsd:string ;
+    mo:Genre "big room"^^xsd:string ;
+    ns1:ratingRating 89.0 ;
+    foaf:maker "Martin Garrix"^^xsd:string .
+
+<37> a mo:Track ;
+    dbo:code "37"^^xsd:string ;
+    dc:title "Otro Trago"^^xsd:string ;
+    mo:Genre "panamanian pop"^^xsd:string ;
+    ns1:ratingRating 91.0 ;
+    foaf:maker "Sech"^^xsd:string .
+
+<38> a mo:Track ;
+    dbo:code "38"^^xsd:string ;
+    dc:title "Antisocial (with Travis Scott)"^^xsd:string ;
+    mo:Genre "pop"^^xsd:string ;
+    ns1:ratingRating 87.0 ;
+    foaf:maker "Ed Sheeran"^^xsd:string .
+
+<39> a mo:Track ;
+    dbo:code "39"^^xsd:string ;
+    dc:title "Sucker"^^xsd:string ;
+    mo:Genre "boy band"^^xsd:string ;
+    ns1:ratingRating 80.0 ;
+    foaf:maker "Jonas Brothers"^^xsd:string .
+
+<4> a mo:Track ;
+    dbo:code "4"^^xsd:string ;
+    dc:title "Beautiful People (feat. Khalid)"^^xsd:string ;
+    mo:Genre "pop"^^xsd:string ;
+    ns1:ratingRating 86.0 ;
+    foaf:maker "Ed Sheeran"^^xsd:string .
+
+<40> a mo:Track ;
+    dbo:code "40"^^xsd:string ;
+    dc:title "fuck, i'm lonely (with Anne-Marie) - from �13 Reasons Why: Season 3�"^^xsd:string ;
+    mo:Genre "dance pop"^^xsd:string ;
+    ns1:ratingRating 78.0 ;
+    foaf:maker "Lauv"^^xsd:string .
+
+<41> a mo:Track ;
+    dbo:code "41"^^xsd:string ;
+    dc:title "Higher Love"^^xsd:string ;
+    mo:Genre "edm"^^xsd:string ;
+    ns1:ratingRating 88.0 ;
+    foaf:maker "Kygo"^^xsd:string .
+
+<42> a mo:Track ;
+    dbo:code "42"^^xsd:string ;
+    dc:title "You Need To Calm Down"^^xsd:string ;
+    mo:Genre "dance pop"^^xsd:string ;
+    ns1:ratingRating 90.0 ;
+    foaf:maker "Taylor Swift"^^xsd:string .
+
+<43> a mo:Track ;
+    dbo:code "43"^^xsd:string ;
+    dc:title "Shallow"^^xsd:string ;
+    mo:Genre "dance pop"^^xsd:string ;
+    ns1:ratingRating 87.0 ;
+    foaf:maker "Lady Gaga"^^xsd:string .
+
+<44> a mo:Track ;
+    dbo:code "44"^^xsd:string ;
+    dc:title "Talk"^^xsd:string ;
+    mo:Genre "pop"^^xsd:string ;
+    ns1:ratingRating 84.0 ;
+    foaf:maker "Khalid"^^xsd:string .
+
+<45> a mo:Track ;
+    dbo:code "45"^^xsd:string ;
+    dc:title "Con Altura"^^xsd:string ;
+    mo:Genre "r&b en espanol"^^xsd:string ;
+    ns1:ratingRating 88.0 ;
+    foaf:maker "ROSAL�A"^^xsd:string .
+
+<46> a mo:Track ;
+    dbo:code "46"^^xsd:string ;
+    dc:title "One Thing Right"^^xsd:string ;
+    mo:Genre "brostep"^^xsd:string ;
+    ns1:ratingRating 88.0 ;
+    foaf:maker "Marshmello"^^xsd:string .
+
+<47> a mo:Track ;
+    dbo:code "47"^^xsd:string ;
+    dc:title "Te Robar�"^^xsd:string ;
+    mo:Genre "latin"^^xsd:string ;
+    ns1:ratingRating 88.0 ;
+    foaf:maker "Nicky Jam"^^xsd:string .
+
+<48> a mo:Track ;
+    dbo:code "48"^^xsd:string ;
+    dc:title "Happier"^^xsd:string ;
+    mo:Genre "brostep"^^xsd:string ;
+    ns1:ratingRating 88.0 ;
+    foaf:maker "Marshmello"^^xsd:string .
+
+<49> a mo:Track ;
+    dbo:code "49"^^xsd:string ;
+    dc:title "Call You Mine"^^xsd:string ;
+    mo:Genre "edm"^^xsd:string ;
+    ns1:ratingRating 88.0 ;
+    foaf:maker "The Chainsmokers"^^xsd:string .
+
+<5> a mo:Track ;
+    dbo:code "5"^^xsd:string ;
+    dc:title "Goodbyes (Feat. Young Thug)"^^xsd:string ;
+    mo:Genre "dfw rap"^^xsd:string ;
+    ns1:ratingRating 94.0 ;
+    foaf:maker "Post Malone"^^xsd:string .
+
+<50> a mo:Track ;
+    dbo:code "50"^^xsd:string ;
+    dc:title "Cross Me (feat. Chance the Rapper & PnB Rock)"^^xsd:string ;
+    mo:Genre "pop"^^xsd:string ;
+    ns1:ratingRating 82.0 ;
+    foaf:maker "Ed Sheeran"^^xsd:string .
+
+<6> a mo:Track ;
+    dbo:code "6"^^xsd:string ;
+    dc:title "I Don't Care (with Justin Bieber)"^^xsd:string ;
+    mo:Genre "pop"^^xsd:string ;
+    ns1:ratingRating 84.0 ;
+    foaf:maker "Ed Sheeran"^^xsd:string .
+
+<7> a mo:Track ;
+    dbo:code "7"^^xsd:string ;
+    dc:title "Ransom"^^xsd:string ;
+    mo:Genre "trap music"^^xsd:string ;
+    ns1:ratingRating 92.0 ;
+    foaf:maker "Lil Tecca"^^xsd:string .
+
+<8> a mo:Track ;
+    dbo:code "8"^^xsd:string ;
+    dc:title "How Do You Sleep?"^^xsd:string ;
+    mo:Genre "pop"^^xsd:string ;
+    ns1:ratingRating 90.0 ;
+    foaf:maker "Sam Smith"^^xsd:string .
+
+<9> a mo:Track ;
+    dbo:code "9"^^xsd:string ;
+    dc:title "Old Town Road - Remix"^^xsd:string ;
+    mo:Genre "country rap"^^xsd:string ;
+    ns1:ratingRating 87.0 ;
+    foaf:maker "Lil Nas X"^^xsd:string .
+

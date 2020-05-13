@@ -2,12 +2,13 @@ const express = require('express')
 const session = require('express-session')
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
-const database = require('./src/database/database')
 const app = express()
+const database = require('./src/database/database')
 const accounts = require('./src/accounts')
 const playlists = require('./src/playlists')
 const songs = require('./src/songs')
 const api = require('./src/api')
+const stardog = require('./src/stardog')
 
 const port = 8640
 
@@ -25,6 +26,12 @@ app.use(session({
     resave: false,
     saveUninitialized: true
 }))
+
+app.use('/accounts', accounts)
+app.use('/playlists', playlists)
+app.use('/songs', songs)
+app.use('/api', api)
+app.use('/stardog', stardog)
 
 database.initDatabase()
 
@@ -157,11 +164,6 @@ app.get('/contact', function (request, response) {
     }
     response.render('contact', context)
 })
-
-app.use('/accounts', accounts)
-app.use('/playlists', playlists)
-app.use('/songs', songs)
-app.use('/api', api)
 
 app.listen(port, () => {
     console.log('Listening on localhost:' + port)
