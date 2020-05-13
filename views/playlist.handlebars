@@ -1,63 +1,94 @@
 {{#> navbar}}
-<nav class="level">
-    <h1 class="title is-1 is-spaced">
-        {{#if session.user_id}}
-        <a class="button is-rounded" href="/explore/{{session.user_id}}">Back</a>
-        {{else}}
-        <a class="button is-rounded" href="/explore">Back</a>
-        {{/if}}
-    </h1>
-</nav>
-
-<div class="columns">
-    <div class="column is-one-quarter">
-        <div>
-            {{> playlistCard playlist}}
-        </div>
-        <br>
-        {{#equal session.user_id playlist.author_id }}
-        <a href="#modalAddSong" class="subtitle is-5 is-spaced button is-primary">Add Song</a>
-        <form action="/playlists/changeStatus" method="POST">
-            {{#if playlist.ispublic}}
-            <button type="submit" class="subtitle is-5 is-spaced button is-info">Make Private</button>
+    <nav class="level">
+        <h1 class="title is-1 is-spaced">
+            {{#if session.user_id}}
+                <a class="button is-rounded" href="/explore/{{session.user_id}}">Back</a>
             {{else}}
-            <button type="submit" class="subtitle is-5 is-spaced button is-info">Make Public</button>
+                <a class="button is-rounded" href="/explore">Back</a>
             {{/if}}
-            <input type="hidden" name="ispublic" value={{playlist.ispublic}}>
-            <input type="hidden" name="playlist_id" value={{playlist.playlist_id}}>
-        </form>
-        <a href="#modalDeletePlaylist" class="subtitle is-5 is-spaced button is-danger">Delete Playlist</a>
-        {{/equal}}
+        </h1>
+    </nav>
+
+    <div class="columns">
+        <div class="column is-one-quarter">
+            <div>
+                {{> playlistCard playlist}}
+            </div>
+            <br>
+            {{#equal session.user_id playlist.author_id }}
+                <a href="#modalAddSong" class="subtitle is-5 is-spaced button is-primary">Add Song</a>
+                <form action="/playlists/changeStatus" method="POST">
+                    {{#if playlist.ispublic}}
+                        <button type="submit" class="subtitle is-5 is-spaced button is-info">Make Private</button>
+                    {{else}}
+                        <button type="submit" class="subtitle is-5 is-spaced button is-info">Make Public</button>
+                    {{/if}}
+                    <input type="hidden" name="ispublic" value={{playlist.ispublic}}>
+                    <input type="hidden" name="playlist_id" value={{playlist.playlist_id}}>
+                </form>
+                <a href="#modalDeletePlaylist" class="subtitle is-5 is-spaced button is-danger">Delete Playlist</a>
+            {{/equal}}
+        </div>
+        <div class="column is-offset-1">
+            <table class="table is-hoverable is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>Song name</th>
+                        <th>Artist name</th>
+                        <th>Album name</th>
+                        <th>Song duration</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each songs}}
+                        <tr>
+                            <td>
+                                <div class="columns">
+                                    <div class="column">
+                                        {{name}}
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="columns">
+                                    <div class="column">
+                                        {{artist}}
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="columns">
+                                    <div class="column">
+                                        {{album}}
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="columns">
+                                    <div class="column">
+                                        {{duration}}
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="columns">
+                                    {{#equal ../session.user_id ../playlist.author_id }}
+                                        <div class="column is-1 is-centered has-text-left">
+                                            <form method="POST" action="/songs/delete">
+                                                <button type="submit" name="song_id" value={{song_id}}
+                                                    class="delete"></button>
+                                                <input type="hidden" name="playlistid"
+                                                    value={{../playlist.playlist_id}}>
+                                            </form>
+                                        </div>
+                                    {{/equal}}
+                                </div>
+                            </td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
     </div>
-    <div class="column is-offset-1">
-        <table class="table is-hoverable is-fullwidth">
-            <thead>
-                <tr>
-                    <th>Song name</th>
-                </tr>
-            </thead>
-            <tbody>
-                {{#each songs}}
-                <tr>
-                    <td>
-                        <div class="columns">
-                            <div class="column">
-                                {{name}}
-                            </div>
-                            {{#equal ../session.user_id ../playlist.author_id }}
-                            <div class="column is-1 is-centered has-text-right">
-                                <form method="POST" action="/songs/delete">
-                                    <button type="submit" name="song_id" value={{song_id}} class="delete"></button>
-                                    <input type="hidden" name="playlistid" value={{../playlist.playlist_id}}>
-                                </form>
-                            </div>
-                            {{/equal}}
-                        </div>
-                    </td>
-                </tr>
-                {{/each}}
-            </tbody>
-        </table>
-    </div>
-</div>
 {{/navbar}}

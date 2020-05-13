@@ -9,6 +9,7 @@ const playlists = require('./src/playlists')
 const songs = require('./src/songs')
 const api = require('./src/api')
 const stardog = require('./src/stardog')
+const sparql = require('./src/sparql').router
 
 const port = 8640
 
@@ -32,6 +33,7 @@ app.use('/playlists', playlists)
 app.use('/songs', songs)
 app.use('/api', api)
 app.use('/stardog', stardog)
+app.use('/sparql', sparql)
 
 database.initDatabase()
 
@@ -88,6 +90,8 @@ app.get('/explore/', async (request, response) => {
             user: values[2]
         }
         response.render('explore', context)
+    }).catch((err) => {
+        response.render('error', context)
     })
 })
 
@@ -105,6 +109,8 @@ app.get('/explore/:id', async (request, response) => {
             user: values[2]
         }
         response.render('explore', context)
+    }).catch((err) => {
+        response.render('error', context)
     })
 })
 
@@ -118,6 +124,8 @@ app.get('/users', async (request, response) => {
             users: users
         }
         response.render('users', context)
+    }).catch((err) => {
+        response.render('error', context)
     })
 })
 
@@ -145,9 +153,10 @@ app.get('/my-music/:id', async (request, response) => {
 
         }
         response.render('mymusic', context)
+    }).catch((err) => {
+        response.render('error', context)
     })
 })
-
 
 app.get('/about', function (request, response) {
     const context = {

@@ -3,19 +3,20 @@ const database = require('../database/database')
 const input_helper = require('../helpers/input_helper')
 const router = express.Router()
 
-router.post('/add', async(request, response) => {
+router.post('/add', async (request, response) => {
     const name = request.body.name
+    const artist = request.body.artist
     const playlistid = request.body.playlistid
 
     const errors = input_helper.checkErrorPlaylistName(name)
 
     if (errors == 0) {
-        var res = database.addSong(request.session.user_id, name, playlistid)
+        var res = database.addSong(request.session.user_id, name, artist, playlistid)
     }
     response.redirect('/playlists/' + playlistid)
 })
 
-router.post('/delete', async(request, response) => {
+router.post('/delete', async (request, response) => {
     const song_id = request.body.song_id
     const playlistid = request.body.playlistid
 

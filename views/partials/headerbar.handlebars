@@ -12,10 +12,10 @@
                 Explore
             </a>
             {{#if session.user_id}}
-            <a href="/my-music/{{session.user_id}}" class="navbar-item">
-                <i class="material-icons as-text">album</i>
-                My Music
-            </a>
+                <a href="/my-music/{{session.user_id}}" class="navbar-item">
+                    <i class="material-icons as-text">album</i>
+                    My Music
+                </a>
             {{/if}}
             <a href="/users" class="navbar-item">
                 <i class="material-icons as-text">supervisor_account</i>
@@ -41,20 +41,20 @@
         <div class="navbar-end">
             <div class="navbar-item">
                 {{#if session.user_id}}
-                <div>
-                    <a href="#modalLogout" class="button is-light">
-                        Log out
-                    </a>
-                </div>
+                    <div>
+                        <a href="#modalLogout" class="button is-light">
+                            Log out
+                        </a>
+                    </div>
                 {{else}}
-                <div>
-                    <a href="/login" class="button is-light">
-                        Log in
-                    </a>
-                    <a href="/signup" class="sign-button button is-primary">
-                        <strong>Sign up</strong>
-                    </a>
-                </div>
+                    <div>
+                        <a href="/login" class="button is-light">
+                            Log in
+                        </a>
+                        <a href="/signup" class="sign-button button is-primary">
+                            <strong>Sign up</strong>
+                        </a>
+                    </div>
                 {{/if}}
 
                 {{!-- MODALS --}}
@@ -127,8 +127,17 @@
                         <form method="POST" action="/songs/add">
                             <div class="field">
                                 <p class="control">
-                                    <input class="input" placeholder="Song name" name="name">
-                                    <input type="hidden" name="playlistid" value={{playlist.playlist_id}}>
+                                <div class="field">
+                                    <div class="control">
+                                        <input class="input" placeholder="Song name" name="name">
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="control">
+                                        <input class="input" placeholder="Artist name" name="artist">
+                                    </div>
+                                </div>
+                                <input type="hidden" name="playlistid" value={{playlist.playlist_id}}>
                                 </p>
                             </div>
                             <div class="field is-grouped">

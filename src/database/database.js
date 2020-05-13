@@ -3,21 +3,21 @@ const db = new sqlite3.Database('./public/database/database.db', sqlite3.OPEN_RE
 
 function initDatabase() {
     db.serialize()
-    db.run('CREATE TABLE users(user_id INTEGER PRIMARY KEY, username TEXT NOT NULL UNIQUE, password TEXT NOT NULL)', function(error) {
+    db.run('CREATE TABLE users(user_id INTEGER PRIMARY KEY, username TEXT NOT NULL UNIQUE, password TEXT NOT NULL)', function (error) {
         if (error) {
             //console.log(error)
         } else {
             console.log("users table created")
         }
     })
-    db.run('CREATE TABLE playlists(playlist_id INTEGER PRIMARY KEY, user_id INTEGER NOT NULL, name TEXT NOT NULL, ispublic BOOLEAN NOT NULL)', function(error) {
+    db.run('CREATE TABLE playlists(playlist_id INTEGER PRIMARY KEY, user_id INTEGER NOT NULL, name TEXT NOT NULL, ispublic BOOLEAN NOT NULL)', function (error) {
         if (error) {
             //console.log(error)
         } else {
             console.log("playlists table created")
         }
     })
-    db.run('CREATE TABLE songs(song_id INTEGER PRIMARY KEY, playlist_id INTEGER NOT NULL, name TEXT NOT NULL)', function(error) {
+    db.run('CREATE TABLE songs(song_id INTEGER PRIMARY KEY, playlist_id INTEGER NOT NULL, name TEXT NOT NULL, artist TEXT NOT NULL)', function (error) {
         if (error) {
             //console.log(error)
         } else {
@@ -28,49 +28,49 @@ function initDatabase() {
 
 function insertDatabase() {
     var query = "INSERT INTO users(username, password) VALUES ('Alice', 'so6')"
-    db.run(query, function(error) {
+    db.run(query, function (error) {
         if (error) {
             console.log(error)
         }
     })
     query = "INSERT INTO users(username, password) VALUES ('Kevin', 'so6')"
-    db.run(query, function(error) {
+    db.run(query, function (error) {
         if (error) {
             console.log(error)
         }
     })
     query = "INSERT INTO playlists(user_id, name) VALUES (1, 'playlist de Alice')"
-    db.run(query, function(error) {
+    db.run(query, function (error) {
         if (error) {
             console.log(error)
         }
     })
     query = "INSERT INTO playlists(user_id, name) VALUES (2, 'playlist de Kevin')"
-    db.run(query, function(error) {
+    db.run(query, function (error) {
         if (error) {
             console.log(error)
         }
     })
     query = "INSERT INTO songs(playlist_id, name) VALUES (1, 'song 1')"
-    db.run(query, function(error) {
+    db.run(query, function (error) {
         if (error) {
             console.log(error)
         }
     })
     query = "INSERT INTO songs(playlist_id, name) VALUES (1, 'song 2')"
-    db.run(query, function(error) {
+    db.run(query, function (error) {
         if (error) {
             console.log(error)
         }
     })
     query = "INSERT INTO songs(playlist_id, name) VALUES (2, 'song 1')"
-    db.run(query, function(error) {
+    db.run(query, function (error) {
         if (error) {
             console.log(error)
         }
     })
     query = "INSERT INTO songs(playlist_id, name) VALUES (2, 'song 2')"
-    db.run(query, function(error) {
+    db.run(query, function (error) {
         if (error) {
             console.log(error)
         }
@@ -115,21 +115,27 @@ function getUserById(user_id) {
 
 function setPlaylistAuthor(playlist) {
     return new Promise((resolve, reject) => {
+        if (playlist === undefined || playlist.user_id === undefined)
+            reject()
         const user = getUserById(playlist.user_id)
         user.then((user) => {
             playlist['author'] = user.username
             playlist['author_id'] = user.user_id
             resolve(playlist)
+        }).catch((err) => {
+            reject(err)
         })
     })
 }
 
 function setPlaylistsAuthor(playlists) {
     return new Promise((resolve, reject) => {
-        playlists.forEach(async(playlist, a) => {
+        playlists.forEach(async (playlist, a) => {
             setPlaylistAuthor(playlist).then((playlist) => {
                 if (a == playlists.length - 1)
                     resolve(playlists)
+            }).catch((err) => {
+                reject(err)
             })
         })
     })
@@ -145,6 +151,8 @@ function getPlaylistsPublic() {
             if (playlists.length > 0)
                 setPlaylistsAuthor(playlists).then((playlists) => {
                     resolve(playlists)
+                }).catch((err) => {
+                    reject(err)
                 })
             else {
                 resolve(playlists)
@@ -163,6 +171,8 @@ function getPlaylists() {
             if (playlists.length > 0)
                 setPlaylistsAuthor(playlists).then((playlists) => {
                     resolve(playlists)
+                }).catch((err) => {
+                    reject(err)
                 })
             else {
                 resolve(playlists)
@@ -180,6 +190,8 @@ function getPlaylistById(playlist_id) {
             }
             setPlaylistAuthor(playlist).then((playlist) => {
                 resolve(playlist)
+            }).catch((err) => {
+                reject(err)
             })
         })
     })
@@ -195,6 +207,8 @@ function getPlaylistsByUserId(user_id) {
             if (playlists.length > 0)
                 setPlaylistsAuthor(playlists).then((playlists) => {
                     resolve(playlists)
+                }).catch((err) => {
+                    reject(err)
                 })
             else {
                 resolve(playlists)
@@ -213,6 +227,8 @@ function getPlaylistsPublicByUserId(user_id) {
             if (playlists.length > 0)
                 setPlaylistsAuthor(playlists).then((playlists) => {
                     resolve(playlists)
+                }).catch((err) => {
+                    reject(err)
                 })
             else {
                 resolve(playlists)
@@ -264,11 +280,14 @@ function changeStatus(playlist_id, ispublic) {
     })
 }
 
-function addSong(user_id, name, playlist_id) {
-    const query = "INSERT INTO songs(playlist_id, name) VALUES (?, ?)"
+function addSong(user_id, name, artist, playlist_id) {
+    const query = "INSERT INTO songs(playlist_id, name, artist) VALUES (?, ?, ?)"
+
+    if (artist === undefined)
+        artist = ""
 
     return new Promise((resolve, reject) => {
-        db.run(query, [playlist_id, name], (err) => {
+        db.run(query, [playlist_id, name, artist], (err) => {
             if (err) {
                 reject(err)
             }
