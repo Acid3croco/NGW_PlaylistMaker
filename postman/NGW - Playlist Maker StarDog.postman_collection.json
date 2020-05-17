@@ -1,0 +1,166 @@
+{
+	"info": {
+		"_postman_id": "bf9c2491-0bf8-445a-b012-39709cb16210",
+		"name": "NGW - Playlist Maker StarDog",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Title list",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Curtains Up\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8640/stardog/title",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8640",
+					"path": [
+						"stardog",
+						"title"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Maker list",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Curtains Up\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8640/stardog/maker",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8640",
+					"path": [
+						"stardog",
+						"maker"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Genre by title",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"song\": \"Any Man\",\n\t\"artist\": \"Eminem\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8640/stardog/genre",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8640",
+					"path": [
+						"stardog",
+						"genre"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Rating by title",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"song\": \"Any Man\",\n\t\"artist\": \"Eminem\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8640/stardog/rating",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8640",
+					"path": [
+						"stardog",
+						"rating"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

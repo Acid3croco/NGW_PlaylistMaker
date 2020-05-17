@@ -1,0 +1,181 @@
+{
+	"info": {
+		"_postman_id": "82d2949c-dd1b-487b-a655-2c3305a386e3",
+		"name": "NGW - Playlist Maker API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Tokens",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "633750ae-4ac1-4d4f-be23-59303cc38c48",
+						"exec": [
+							"function jwt_decode(a) {",
+							"    var parts = a.split('.'); // header, payload, signature",
+							"    return JSON.parse(atob(parts[1]));",
+							"}",
+							"",
+							"var response = JSON.parse(responseBody);",
+							"var payload = jwt_decode(response.id_token)",
+							"postman.setEnvironmentVariable(\"userId\", payload.sub);",
+							"postman.setEnvironmentVariable(\"authToken\", response.access_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJ1c2VybmFtZSI6InlvYW5uIiwiaWF0IjoxNTg1MzQzMDA2fQ.njnZ27NB9TDVnEDQ4sM5KNitKNN_RsAckxWNkAJtOoI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "oui",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "oui",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8640/api/tokens",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8640",
+					"path": [
+						"api",
+						"tokens"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Playlists Add",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"accountId\": {{userId}},\n\t\"name\": \"playlist postman\",\n\t\"isPublic\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8640/api/playlists",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8640",
+					"path": [
+						"api",
+						"playlists"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Songs Add",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"accountId\": {{userId}},\n\t\"playlistId\": 1,\n\t\"name\": \"postman music 1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8640/api/songs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8640",
+					"path": [
+						"api",
+						"songs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Playlists",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8640/api/playlists",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8640",
+					"path": [
+						"api",
+						"playlists"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
