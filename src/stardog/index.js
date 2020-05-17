@@ -8,7 +8,7 @@ const conn = new Connection({
     endpoint: 'http://localhost:5820',
 });
 
-router.get('/title', function (request, response) {
+router.post('/title', function (request, response) {
     query.execute(conn, 'top50db',
         `PREFIX dc: <http://purl.org/dc/elements/1.1/>
 
@@ -19,11 +19,17 @@ router.get('/title', function (request, response) {
         limit: 50,
         offset: 0,
     }).then(({ body }) => {
-        console.log(body.results.bindings + '\n');
+        body.results.bindings.forEach(song => {
+            console.log(`Title: ${song['title'].value}`)
+        });
+        response.status(200).json(body.results.bindings)
+    }).catch(function (err) {
+        console.error(err)
+        response.status(400).end()
     });
 })
 
-router.get('/maker', function (request, response) {
+router.post('/maker', function (request, response) {
     query.execute(conn, 'top50db',
         `PREFIX dc: <http://purl.org/dc/elements/1.1/>
         PREFIX foaf: <http://xmlns.com/foaf/0.1/>
@@ -36,11 +42,17 @@ router.get('/maker', function (request, response) {
         limit: 50,
         offset: 0,
     }).then(({ body }) => {
-        console.log(body.results.bindings);
+        body.results.bindings.forEach(song => {
+            console.log(`Title: ${song['title'].value}, Maker: ${song['maker'].value}`);
+        });
+        response.status(200).json(body.results.bindings)
+    }).catch(function (err) {
+        console.error(err)
+        response.status(400).end()
     });
 })
 
-router.get('/genre', function (request, response) {
+router.post('/genre', function (request, response) {
     query.execute(conn, 'top50db',
         `PREFIX dc: <http://purl.org/dc/elements/1.1/>
         PREFIX mo: <http://purl.org/ontology/mo/>
@@ -53,11 +65,17 @@ router.get('/genre', function (request, response) {
         limit: 50,
         offset: 0,
     }).then(({ body }) => {
-        console.log(body.results.bindings);
+        body.results.bindings.forEach(song => {
+            console.log(`Title: ${song['title'].value}, Genre: ${song['genre'].value}`);
+        });
+        response.status(200).json(body.results.bindings)
+    }).catch(function (err) {
+        console.error(err)
+        response.status(400).end()
     });
 })
 
-router.get('/rating', function (request, response) {
+router.post('/rating', function (request, response) {
     query.execute(conn, 'top50db',
         `PREFIX dc: <http://purl.org/dc/elements/1.1/>
         PREFIX ns1: <http://purl.org/stuff/rev#>
@@ -70,7 +88,13 @@ router.get('/rating', function (request, response) {
         limit: 50,
         offset: 0,
     }).then(({ body }) => {
-        console.log(body.results.bindings);
+        body.results.bindings.forEach(song => {
+            console.log(`Title: ${song['title'].value}, Rating: ${song['rating'].value}`);
+        });
+        response.status(200).json(body.results.bindings)
+    }).catch(function (err) {
+        console.error(err)
+        response.status(400).end()
     });
 })
 
