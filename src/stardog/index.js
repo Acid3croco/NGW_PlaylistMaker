@@ -8,6 +8,37 @@ const conn = new Connection({
     endpoint: 'http://localhost:5820',
 });
 
+router.post('/track', function (request, response) {
+    const title = request.body.title
+    query.execute(conn, 'top50db',
+        `PREFIX dc: <http://purl.org/dc/elements/1.1/>
+        PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+        PREFIX mo: <http://purl.org/ontology/mo/>
+        PREFIX ns1: <http://purl.org/stuff/rev#>
+
+        SELECT ?maker ?genre ?rating WHERE {
+            ?music dc:title "${title}" .
+            ?music foaf:maker ?maker .
+            ?music mo:Genre ?genre .
+            ?music ns1:ratingRating ?rating
+        }`,
+        'application/sparql-results+json', {
+        limit: 1,
+        offset: 0,
+    }).then(({ body }) => {
+        body.results.bindings.forEach(song => {
+            console.log(`Title: ${title}`)
+            console.log(`Maker: ${song['maker'].value}`)
+            console.log(`Genre: ${song['genre'].value}`)
+            console.log(`Rating: ${song['rating'].value}`)
+        });
+        response.status(200).json(body.results.bindings)
+    }).catch(function (err) {
+        console.error(err)
+        response.status(400).end()
+    });
+})
+
 router.post('/title', function (request, response) {
     query.execute(conn, 'top50db',
         `PREFIX dc: <http://purl.org/dc/elements/1.1/>
