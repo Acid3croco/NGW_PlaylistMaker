@@ -22,7 +22,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"name\": \"Curtains Up\"\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -61,7 +61,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"name\": \"Curtains Up\"\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -100,7 +100,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"song\": \"Any Man\",\n\t\"artist\": \"Eminem\"\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -139,7 +139,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"song\": \"Any Man\",\n\t\"artist\": \"Eminem\"\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -156,6 +156,45 @@
 					"path": [
 						"stardog",
 						"rating"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Track info",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"bad guy\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8640/stardog/track",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8640",
+					"path": [
+						"stardog",
+						"track"
 					]
 				}
 			},
