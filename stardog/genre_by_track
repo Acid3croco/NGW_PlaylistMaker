@@ -1,0 +1,7 @@
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX mo: <http://purl.org/ontology/mo/>
+
+SELECT ?title ?genre WHERE {
+    ?music dc:title ?title .
+    ?music mo:Genre ?genre
+}
