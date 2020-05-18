@@ -1,1 +1,23 @@
-ERRROR
+{{#> headerbar}}
+{{/headerbar}}
+<section class="hero is-fullheight-with-navbar is-light">
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <h1 class="title is-1 is-spaced">
+                {{#if message}}
+                    {{message}}
+                {{else}}
+                    An error occured
+                {{/if}}
+            </h1>
+            <div class="column is-4 is-offset-4">
+                <a href="/" class="button is-rounded is-warning is-large is-fullwidth title is-3">
+                    {{#if button}}
+                        {{button}}
+                    {{else}}
+                        Bring me back home
+                    {{/if}}</a>
+            </div>
+        </div>
+    </div>
+</section>

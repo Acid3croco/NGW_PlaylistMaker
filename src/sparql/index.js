@@ -65,7 +65,8 @@ router.post('/artist', function (request, response) {
 })
 
 function getTrack(song, artist, debug = false) {
-
+    if (song === undefined || song === "")
+        return undefined
     if (artist === undefined || artist === "")
         artist = "?a"
     else

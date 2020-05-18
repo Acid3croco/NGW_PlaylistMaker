@@ -28,14 +28,14 @@ app.use(session({
     saveUninitialized: true
 }))
 
+database.initDatabase()
+
 app.use('/accounts', accounts)
 app.use('/playlists', playlists)
 app.use('/songs', songs)
 app.use('/api', api)
 app.use('/stardog', stardog)
 app.use('/sparql', sparql)
-
-database.initDatabase()
 
 app.get('/', function (request, response) {
     const context = {
@@ -75,23 +75,22 @@ app.get('/db/fill', (request, response) => {
 
 app.get('/explore/', async (request, response) => {
     const allplaylists = database.getPlaylistsPublic()
-    const user = database.getUserById(request.params.id)
 
     if (request.session.user_id) {
         response.redirect('/explore/' + request.session.user_id)
     }
 
-    Promise.all([allplaylists, user]).then((values) => {
+    allplaylists.then((allplaylists) => {
         const context = {
             title: 'Explore',
             session: request.session,
-            allplaylists: values[0],
+            allplaylists: allplaylists,
             myplaylists: null,
-            user: values[2]
+            user: null
         }
         response.render('explore', context)
     }).catch((err) => {
-        response.render('error', context)
+        response.render('error', {})
     })
 })
 
@@ -100,17 +99,17 @@ app.get('/explore/:id', async (request, response) => {
     const myplaylists = database.getPlaylistsByUserId(request.session.user_id)
     const user = database.getUserById(request.params.id)
 
-    Promise.all([allplaylists, myplaylists, user]).then((values) => {
+    Promise.all([allplaylists, myplaylists, user]).then(([allplaylists, myplaylists, user]) => {
         const context = {
             title: 'Explore',
             session: request.session,
-            allplaylists: values[0].slice(0, 4),
-            myplaylists: values[1],
-            user: values[2]
+            allplaylists: allplaylists.slice(0, 4),
+            myplaylists: myplaylists,
+            user: user
         }
         response.render('explore', context)
     }).catch((err) => {
-        response.render('error', context)
+        response.render('error', {})
     })
 })
 
@@ -125,7 +124,7 @@ app.get('/users', async (request, response) => {
         }
         response.render('users', context)
     }).catch((err) => {
-        response.render('error', context)
+        response.render('error', {})
     })
 })
 
@@ -139,22 +138,23 @@ app.get('/my-music/:id', async (request, response) => {
     else
         playlists = database.getPlaylistsPublicByUserId(request.params.id)
 
-    Promise.all([playlists, user]).then((values) => {
+    Promise.all([playlists, user]).then(([playlists, user]) => {
         if (request.params.id == request.session.user_id) {
             title = 'My music'
         } else {
-            title = values[1].username + ' music'
+            title = user.username + ' music'
         }
         const context = {
             title: title,
             session: request.session,
-            playlists: values[0],
-            user: values[1]
+            playlists: playlists,
+            user: user
 
         }
         response.render('mymusic', context)
     }).catch((err) => {
-        response.render('error', context)
+        console.log(err)
+        response.render('error', {})
     })
 })
 
@@ -174,6 +174,16 @@ app.get('/contact', function (request, response) {
     response.render('contact', context)
 })
 
+app.get('*', function (request, response) {
+    const context = {
+        message: 'Seems like you are lost in the dark',
+        button: 'Bring me to the light!'
+    }
+    response.render('error', context)
+});
+
 app.listen(port, () => {
     console.log('Listening on localhost:' + port)
 })
+
+module.exports = app

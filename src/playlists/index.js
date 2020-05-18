@@ -12,29 +12,45 @@ router.get('/:id', async (request, response) => {
 
     const newSongs = []
 
-    Promise.all([songs, playlist, user]).then(function (values) {
-        values[0].forEach(song => {
-            getTrack(song.name, song.artist).then((res) => {
-                var album = undefined
-                var duration = undefined
-                if (res.length > 0) {
-                    album = res[0]['alb'].value
-                    duration = msToMin(res[0]['len'].value)
-                }
-                newSongs.push({ "song_id": song.song_id, "name": song.name, "artist": song.artist, "album": album, "duration": duration })
-                if (newSongs.length == values[0].length) {
-                    const context = {
-                        title: values[1].name,
-                        session: request.session,
-                        songs: newSongs.sort((a, b) => a.name > b.name),
-                        playlist: values[1],
-                        user: values[2]
+    Promise.all([songs, playlist, user]).then(function ([songs, playlist, user]) {
+        if (songs.length > 0)
+            songs.forEach(song => {
+                getTrack(song.name, song.artist).then((track) => {
+                    var album = undefined
+                    var duration = undefined
+                    if (track.length > 0) {
+                        album = track[0]['alb'].value
+                        duration = msToMin(track[0]['len'].value)
                     }
-                    response.render('playlist', context)
-                }
-            })
-        });
-
+                    newSongs.push({ "song_id": song.song_id, "name": song.name, "artist": song.artist, "album": album, "duration": duration })
+                    if (newSongs.length == songs.length) {
+                        const context = {
+                            title: playlist.name,
+                            session: request.session,
+                            songs: newSongs.sort((a, b) => a.name > b.name),
+                            playlist: playlist,
+                            user: user
+                        }
+                        response.render('playlist', context)
+                    }
+                }).catch((err) => {
+                    console.log(err)
+                    response.render('error', {})
+                })
+            });
+        else {
+            const context = {
+                title: playlist.name,
+                session: request.session,
+                songs: null,
+                playlist: playlist,
+                user: user
+            }
+            response.render('playlist', context)
+        }
+    }).catch((err) => {
+        console.log(err)
+        response.render('error', {})
     })
 })
 
