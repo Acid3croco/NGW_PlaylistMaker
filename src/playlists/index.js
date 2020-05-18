@@ -35,7 +35,7 @@ router.get('/:id', async (request, response) => {
                     }
                 }).catch((err) => {
                     console.log(err)
-                    response.render('error', {})
+                    response.render('error', { title: "Error" })
                 })
             });
         else {
@@ -50,7 +50,7 @@ router.get('/:id', async (request, response) => {
         }
     }).catch((err) => {
         console.log(err)
-        response.render('error', {})
+        response.render('error', { title: "Error" })
     })
 })
 

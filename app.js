@@ -90,7 +90,7 @@ app.get('/explore/', async (request, response) => {
         }
         response.render('explore', context)
     }).catch((err) => {
-        response.render('error', {})
+        response.render('error', { title: "Error" })
     })
 })
 
@@ -109,7 +109,7 @@ app.get('/explore/:id', async (request, response) => {
         }
         response.render('explore', context)
     }).catch((err) => {
-        response.render('error', {})
+        response.render('error', { title: "Error" })
     })
 })
 
@@ -124,7 +124,7 @@ app.get('/users', async (request, response) => {
         }
         response.render('users', context)
     }).catch((err) => {
-        response.render('error', {})
+        response.render('error', { title: "Error" })
     })
 })
 
@@ -154,7 +154,7 @@ app.get('/my-music/:id', async (request, response) => {
         response.render('mymusic', context)
     }).catch((err) => {
         console.log(err)
-        response.render('error', {})
+        response.render('error', { title: "Error" })
     })
 })
 
@@ -176,6 +176,7 @@ app.get('/contact', function (request, response) {
 
 app.get('*', function (request, response) {
     const context = {
+        title: 'Error',
         message: 'Seems like you are lost in the dark',
         button: 'Bring me to the light!'
     }
