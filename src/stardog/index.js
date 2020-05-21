@@ -26,12 +26,12 @@ router.post('/track', function (request, response) {
         limit: 1,
         offset: 0,
     }).then(({ body }) => {
-        body.results.bindings.forEach(song => {
-            console.log(`Title: ${title}`)
-            console.log(`Maker: ${song['maker'].value}`)
-            console.log(`Genre: ${song['genre'].value}`)
-            console.log(`Rating: ${song['rating'].value}`)
-        });
+        // body.results.bindings.forEach(song => {
+        //     console.log(`Title: ${title}`)
+        //     console.log(`Maker: ${song['maker'].value}`)
+        //     console.log(`Genre: ${song['genre'].value}`)
+        //     console.log(`Rating: ${song['rating'].value}`)
+        // });
         response.status(200).json(body.results.bindings)
     }).catch(function (err) {
         console.error(err)
@@ -50,9 +50,9 @@ router.post('/title', function (request, response) {
         limit: 50,
         offset: 0,
     }).then(({ body }) => {
-        body.results.bindings.forEach(song => {
-            console.log(`Title: ${song['title'].value}`)
-        });
+        // body.results.bindings.forEach(song => {
+        //     console.log(`Title: ${song['title'].value}`)
+        // });
         response.status(200).json(body.results.bindings)
     }).catch(function (err) {
         console.error(err)
@@ -73,9 +73,9 @@ router.post('/maker', function (request, response) {
         limit: 50,
         offset: 0,
     }).then(({ body }) => {
-        body.results.bindings.forEach(song => {
-            console.log(`Title: ${song['title'].value}, Maker: ${song['maker'].value}`);
-        });
+        // body.results.bindings.forEach(song => {
+        //     console.log(`Title: ${song['title'].value}, Maker: ${song['maker'].value}`);
+        // });
         response.status(200).json(body.results.bindings)
     }).catch(function (err) {
         console.error(err)
@@ -96,9 +96,9 @@ router.post('/genre', function (request, response) {
         limit: 50,
         offset: 0,
     }).then(({ body }) => {
-        body.results.bindings.forEach(song => {
-            console.log(`Title: ${song['title'].value}, Genre: ${song['genre'].value}`);
-        });
+        // body.results.bindings.forEach(song => {
+        //     console.log(`Title: ${song['title'].value}, Genre: ${song['genre'].value}`);
+        // });
         response.status(200).json(body.results.bindings)
     }).catch(function (err) {
         console.error(err)
@@ -119,9 +119,9 @@ router.post('/rating', function (request, response) {
         limit: 50,
         offset: 0,
     }).then(({ body }) => {
-        body.results.bindings.forEach(song => {
-            console.log(`Title: ${song['title'].value}, Rating: ${song['rating'].value}`);
-        });
+        // body.results.bindings.forEach(song => {
+        //     console.log(`Title: ${song['title'].value}, Rating: ${song['rating'].value}`);
+        // });
         response.status(200).json(body.results.bindings)
     }).catch(function (err) {
         console.error(err)
